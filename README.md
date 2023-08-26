@@ -1,4 +1,3 @@
-Certainly, I'll define each challenge task as a feature of the website, explain how they can be carried out, and provide a timeline that fits within an 11-day development period.
 
 **Feature 1: Contractor Registration**
 - **Description:** Allow contractors to easily register by capturing their details, including personal information, contact information, bank details, project details, employee details, shareholding, directors' information, and plant & equipment information.
