@@ -10,7 +10,9 @@ import 'package:flutter/foundation.dart'
 /// ```dart
 /// import 'firebase_options.dart';
 /// // ...
-
+/// await Firebase.initializeApp(
+///   options: DefaultFirebaseOptions.currentPlatform,
+/// );
 /// ```
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
@@ -51,13 +53,11 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyB5SWOa8aHcMgNgoVPpMJvvc47SE5JGjMU',
-    appId: '1:945592115039:web:d598c17a3c159e33a920ea',
-    messagingSenderId: '945592115039',
-    projectId: 'blue-e9db5',
-    authDomain: 'blue-e9db5.firebaseapp.com',
-    databaseURL: 'https://blue-e9db5.firebaseio.com',
-    storageBucket: 'blue-e9db5.appspot.com',
-    measurementId: 'G-2VCY6DJN4S',
+    apiKey: 'AIzaSyC3KuWma44Vs819twMXlTf59ggKXBPGZDs',
+    appId: '1:910908914378:web:93c9b920f0776e79b19233',
+    messagingSenderId: '910908914378',
+    projectId: 'ppdab-2023',
+    authDomain: 'ppdab-2023.firebaseapp.com',
+    storageBucket: 'ppdab-2023.appspot.com',
   );
 }
