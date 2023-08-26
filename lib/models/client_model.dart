@@ -17,6 +17,7 @@ class Client {
   final Timestamp? cipaRegistrationDate;
   final Timestamp? createdAt;
   final String? category;
+  final String? codes;
 
   Client(
     this.uid,
@@ -35,6 +36,7 @@ class Client {
     this.cipaRegistrationDate,
     this.createdAt,
     this.category,
+    this.codes,
   );
 
   Client.fromMap(Map<String, dynamic> data, String documentId)
@@ -50,6 +52,7 @@ class Client {
         businessType = BusinessType.values[data['businessType']],
         businessName = data['businessName'],
         omang = data['omang'],
+        codes = data['codes'],
         areYouRegisteredWithCIPA = data['areYouRegisteredWithCIPA'],
         cipaRegistrationNumber = data['cipaRegistrationNumber'],
         cipaRegistrationDate = data['cipaRegistrationDate'],
@@ -60,6 +63,7 @@ class Client {
       'firstName': firstName,
       'lastName': lastName,
       'email': email,
+      'codes': codes,
       'username': username,
       'secondaryEmail': secondaryEmail,
       'status': status.index,
@@ -87,6 +91,7 @@ class Client {
       BusinessType? businessType,
       String? businessName,
       String? omang,
+      String? codes,
       bool? areYouRegisteredWithCIPA,
       String? cipaRegistrationNumber,
       Timestamp? cipaRegistrationDate,
@@ -109,6 +114,7 @@ class Client {
       cipaRegistrationDate ?? this.cipaRegistrationDate,
       createdAt ?? this.createdAt,
       category ?? this.category,
+      codes ?? this.codes,
     );
   }
 }

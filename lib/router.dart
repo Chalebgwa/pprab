@@ -1,9 +1,17 @@
 import 'package:go_router/go_router.dart';
 import 'package:flutter/material.dart';
+import 'package:pprab/views/desktop/contractor_registration/contractor_registration.dart';
 import 'package:pprab/views/home.dart';
 
 final router = GoRouter(
+  initialLocation: HomeScreen.routeName,
   routes: [
+    GoRoute(
+      path: ContractorRegistration.routeName,
+      pageBuilder: (context, state) => const MaterialPage(
+        child: ContractorRegistration(),
+      ),
+    ),
     GoRoute(
       path: HomeScreen.routeName,
       pageBuilder: (context, state) => const MaterialPage(

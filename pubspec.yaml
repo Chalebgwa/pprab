@@ -40,6 +40,8 @@ dependencies:
   go_router: ^10.1.0
   firebase_auth: ^4.8.0
   firebase_analytics: ^10.4.5
+  responsive_ui: ^3.0.1
+  
 
 dev_dependencies:
   flutter_test:
