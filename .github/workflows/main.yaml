@@ -15,7 +15,7 @@ jobs:
   #     flutter_version: 3.10.6
   build:
     name: Build
-    needs: [semantic-pull-request, analyze]
+    needs: [semantic-pull-request]
     runs-on: ubuntu-latest
     steps:
       - name: 📚 Git Checkout
