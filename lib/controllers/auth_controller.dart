@@ -17,14 +17,7 @@ class Auth extends ChangeNotifier {
         email: email,
         password: password,
       );
-      // currentUser = Client(
-      //   email: userCredential.user!.email!,
-      //   username: userCredential.user!.displayName!,
-      //   userType: UserType.admin,
-      //   uid: userCredential.user!.uid,
-      //   imageUrl: userCredential.user!.photoURL,
 
-      // );
       notifyListeners();
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
