@@ -8,6 +8,6 @@ enum RegistrationStatus {
 }
 
 class ContractorNotifier extends ChangeNotifier {
-  RegistrationStatus _status = RegistrationStatus.initial;
+  final RegistrationStatus _status = RegistrationStatus.initial;
   RegistrationStatus get status => _status;
 }

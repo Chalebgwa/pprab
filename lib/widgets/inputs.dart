@@ -1,13 +1,11 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class TextInput extends StatelessWidget {
   const TextInput({
-    super.key,
+    required this.obscureText, super.key,
     this.label,
     this.initialValue,
     this.errorText,
-    required this.obscureText,
     this.onChanged,
     this.value,
   });

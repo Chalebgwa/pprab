@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 class ContractorRegistration extends StatefulWidget {
-  static const routeName = '/contractor-registration';
 
   const ContractorRegistration({super.key});
+  static const routeName = '/contractor-registration';
 
   @override
   State<ContractorRegistration> createState() => _ContractorRegistrationState();

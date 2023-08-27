@@ -1,6 +1,47 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Client {
+  Client({
+    required this.uid,
+    required this.firstName,
+    required this.lastName,
+    required this.email,
+    required this.username,
+    required this.secondaryEmail,
+    required this.status,
+    required this.type,
+    required this.businessType,
+    required this.businessName,
+    required this.omang,
+    required this.areYouRegisteredWithCIPA,
+    required this.cipaRegistrationNumber,
+    required this.cipaRegistrationDate,
+    required this.createdAt,
+    required this.category,
+    required this.codes,
+  });
+
+  factory Client.fromJson(Map<String, dynamic> json) {
+    return Client(
+      uid: json['uid'] as String,
+      firstName: json['firstName'] as String,
+      lastName: json['lastName'] as String,
+      email: json['email'] as String,
+      username: json['username'] as String,
+      secondaryEmail: json['secondaryEmail'] as String,
+      status: UserStatus.values[json['status'] as int],
+      type: UserType.values[json['type'] as int],
+      businessType: BusinessType.values[json['businessType'] as int],
+      businessName: json['businessName'] as String,
+      omang: json['omang'] as String,
+      areYouRegisteredWithCIPA: json['areYouRegisteredWithCIPA'] as bool?,
+      cipaRegistrationNumber: json['cipaRegistrationNumber'] as String?,
+      cipaRegistrationDate: json['cipaRegistrationDate'] as Timestamp?,
+      createdAt: json['createdAt'] as Timestamp?,
+      category: json['category'] as String?,
+      codes: json['codes'] as String?,
+    );
+  }
   final String uid;
   final String firstName;
   final String lastName;
@@ -11,52 +52,13 @@ class Client {
   final UserType type;
   final BusinessType businessType;
   final String businessName;
-  final String? omang;
+  final String omang;
   final bool? areYouRegisteredWithCIPA;
   final String? cipaRegistrationNumber;
   final Timestamp? cipaRegistrationDate;
   final Timestamp? createdAt;
   final String? category;
   final String? codes;
-
-  Client(
-    this.uid,
-    this.firstName,
-    this.lastName,
-    this.email,
-    this.username,
-    this.secondaryEmail,
-    this.status,
-    this.type,
-    this.businessType,
-    this.businessName,
-    this.omang,
-    this.areYouRegisteredWithCIPA,
-    this.cipaRegistrationNumber,
-    this.cipaRegistrationDate,
-    this.createdAt,
-    this.category,
-    this.codes,
-  );
-
-  Client.fromMap(Map<String, dynamic> data, String documentId)
-      : uid = documentId,
-        firstName = data['firstName'],
-        lastName = data['lastName'],
-        email = data['email'],
-        username = data['username'],
-        category = data['category'],
-        secondaryEmail = data['secondaryEmail'],
-        status = UserStatus.values[data['status']],
-        type = UserType.values[data['type']],
-        businessType = BusinessType.values[data['businessType']],
-        businessName = data['businessName'],
-        omang = data['omang'],
-        codes = data['codes'],
-        areYouRegisteredWithCIPA = data['areYouRegisteredWithCIPA'],
-        cipaRegistrationNumber = data['cipaRegistrationNumber'],
-        cipaRegistrationDate = data['cipaRegistrationDate'],
-        createdAt = data['createdAt'];
 
   Map<String, dynamic> toMap() {
     return {
@@ -79,42 +81,45 @@ class Client {
     };
   }
 
-  Client copyWith(
-      {String? uid,
-      String? firstName,
-      String? lastName,
-      String? email,
-      String? username,
-      String? secondaryEmail,
-      UserStatus? status,
-      UserType? type,
-      BusinessType? businessType,
-      String? businessName,
-      String? omang,
-      String? codes,
-      bool? areYouRegisteredWithCIPA,
-      String? cipaRegistrationNumber,
-      Timestamp? cipaRegistrationDate,
-      Timestamp? createdAt,
-      String? category}) {
+  Client copyWith({
+    String? uid,
+    String? firstName,
+    String? lastName,
+    String? email,
+    String? username,
+    String? secondaryEmail,
+    UserStatus? status,
+    UserType? type,
+    BusinessType? businessType,
+    String? businessName,
+    String? omang,
+    String? codes,
+    bool? areYouRegisteredWithCIPA,
+    String? cipaRegistrationNumber,
+    Timestamp? cipaRegistrationDate,
+    Timestamp? createdAt,
+    String? category,
+  }) {
     return Client(
-      uid ?? this.uid,
-      firstName ?? this.firstName,
-      lastName ?? this.lastName,
-      email ?? this.email,
-      username ?? this.username,
-      secondaryEmail ?? this.secondaryEmail,
-      status ?? this.status,
-      type ?? this.type,
-      businessType ?? this.businessType,
-      businessName ?? this.businessName,
-      omang ?? this.omang,
-      areYouRegisteredWithCIPA ?? this.areYouRegisteredWithCIPA,
-      cipaRegistrationNumber ?? this.cipaRegistrationNumber,
-      cipaRegistrationDate ?? this.cipaRegistrationDate,
-      createdAt ?? this.createdAt,
-      category ?? this.category,
-      codes ?? this.codes,
+      uid: uid ?? this.uid,
+      firstName: firstName ?? this.firstName,
+      lastName: lastName ?? this.lastName,
+      email: email ?? this.email,
+      username: username ?? this.username,
+      secondaryEmail: secondaryEmail ?? this.secondaryEmail,
+      status: status ?? this.status,
+      type: type ?? this.type,
+      businessType: businessType ?? this.businessType,
+      businessName: businessName ?? this.businessName,
+      omang: omang ?? this.omang,
+      codes: codes ?? this.codes,
+      areYouRegisteredWithCIPA:
+          areYouRegisteredWithCIPA ?? this.areYouRegisteredWithCIPA,
+      cipaRegistrationNumber:
+          cipaRegistrationNumber ?? this.cipaRegistrationNumber,
+      cipaRegistrationDate: cipaRegistrationDate ?? this.cipaRegistrationDate,
+      createdAt: createdAt ?? this.createdAt,
+      category: category ?? this.category,
     );
   }
 }

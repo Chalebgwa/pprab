@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pprab/models/client_model.dart';
 
 class ContractorTile extends StatelessWidget {
-  const ContractorTile({super.key, required this.contractor});
+  const ContractorTile({required this.contractor, super.key});
 
   final Client contractor;
 
