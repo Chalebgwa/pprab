@@ -21,8 +21,8 @@ jobs:
       - name: Install Dependencies
         run: flutter pub get
 
-      - name: Build APK
-        run: flutter build apk --release
+      - name: Build Web
+        run: flutter build web
 
       - name: Deploy to Firebase
         run: |
