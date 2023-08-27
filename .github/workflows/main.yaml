@@ -53,7 +53,6 @@ jobs:
       - name: 🎯 Deploy to firebase
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
-          repoToken: "${{ secrets.GIT_TOKEN }}"
-          firebaseServiceAccount: "1//037Ym9YBO7ph1CgYIARAAGAMSNwF-L9IrrEITS7047-vsFbhYOLDEYN5MGwa_OiGHpnUxOpll7GvqBphkxeWIsUdq439fGkUhhak"
+          firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_PPDAB_2023 }}"
           channelId: live
           projectId: 'ppdab-2023'
