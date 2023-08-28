@@ -24,6 +24,19 @@ class ContractorForm extends ChangeNotifier {
   // displayed when business type is business name
   Validator omang = Validator(null, null);
 
+  Validator dateOfBusinessRegistration = Validator(null, null);
+
+  void validateDor(String dor) {
+    final date = DateTime.tryParse(dor);
+
+    if (date != null && date.isBefore(DateTime.now())) {
+      dateOfBusinessRegistration = Validator(dor, null);
+    } else {
+      dateOfBusinessRegistration = Validator(null, 'invalid date selected');
+    }
+    notifyListeners();
+  }
+
   // first name validator
   void validateFirstName(String value) {
     if (value.isEmpty) {
@@ -188,7 +201,7 @@ class ContractorForm extends ChangeNotifier {
   // submit the form
   void submit() {
     if (isValid) {
-      print('Form is valid');
+      print(toJson());
     } else {
       print('Form is invalid');
     }

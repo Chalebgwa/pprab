@@ -4,20 +4,20 @@ import 'package:pprab/views/desktop/contractor_registration/contractor_registrat
 import 'package:pprab/views/home.dart';
 
 final router = GoRouter(
-  initialLocation: HomeScreen.routeName,
+  initialLocation: '/',
   routes: [
     GoRoute(
-      path: ContractorRegistration.routeName,
+      path: '/',
       pageBuilder: (context, state) => const MaterialPage(
         child: ContractorRegistration(),
       ),
     ),
-    GoRoute(
-      path: HomeScreen.routeName,
-      pageBuilder: (context, state) => const MaterialPage(
-        child: HomeScreen(),
-      ),
-    ),
+    // GoRoute(
+    //   path: HomeScreen.routeName,
+    //   pageBuilder: (context, state) => const MaterialPage(
+    //     child: HomeScreen(),
+    //   ),
+    // ),
   ],
   errorPageBuilder: (context, state) => MaterialPage(
     key: state.pageKey,
