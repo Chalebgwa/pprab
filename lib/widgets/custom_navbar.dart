@@ -65,35 +65,36 @@ class CustomNavBar extends StatelessWidget {
             label: 'Media',
             page: 'media',
           ),
-          const SizedBox(
-            width: 45,
-          ),
+          // const SizedBox(
+          //   width: 45,
+          // ),
           const SearchWidget(),
           const SizedBox(
             width: 45,
           ),
-          ElevatedButton(
-            onPressed: () {
+          InkWell(
+            onTap: () {
               context.go(ContractorRegistration.routeName);
             },
-            style: ElevatedButton.styleFrom(
-              fixedSize: const Size(195, 45),
-              backgroundColor: Colors.white,
-              foregroundColor: Colors.black,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10.r),
+            child: Container(
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(10),
               ),
-            ),
-            child: Text(
-              'LOGIN/REGISTER',
-              style: GoogleFonts.inter(
-                fontSize: 14,
-                fontWeight: FontWeight.bold,
+              width: 195,
+              height: 45,
+              child: Text(
+                'LOGIN/REGISTER',
+                style: GoogleFonts.inter(
+                  fontSize: 14,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
           ),
           const SizedBox(
-            width: 120,
+            width: 50,
           ),
         ],
       ),
