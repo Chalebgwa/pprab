@@ -1,5 +1,13 @@
+import 'dart:convert';
+import 'dart:developer';
+import 'dart:js_interop';
+import 'package:http/http.dart' as http;
+
 import 'package:flutter/material.dart';
 import 'package:pprab/forms/validator.dart';
+import 'package:pprab/models/client_model.dart';
+
+import 'package:pprab/api_service/confi.dart';
 
 class ContractorForm extends ChangeNotifier {
   Validator firstName = Validator(null, null);
@@ -155,7 +163,7 @@ class ContractorForm extends ChangeNotifier {
 
   void validateOmang(String value) {
     // must be 9 digit number with [1,2] as the 5th number
-    final omangRegex = RegExp(r'^[0-9]{2}[1-2][0-9]{6}$');
+    final omangRegex = RegExp(r'^\d{4}[12]\d{4}$');
 
     if (value.isEmpty) {
       omang = Validator(null, 'Omang is required');
@@ -175,10 +183,10 @@ class ContractorForm extends ChangeNotifier {
         password.isValid &&
         confirmPassword.isValid &&
         phoneNumber.isValid &&
-        businessName.isValid &&
-        businessType.isValid &&
-        areYourRegisterdWithCipa.isValid &&
-        cipaNumber.isValid &&
+        // businessName.isValid &&
+        //businessType.isValid &&
+        // areYourRegisterdWithCipa.isValid &&
+        // cipaNumber.isValid &&
         omang.isValid;
   }
 
@@ -190,10 +198,10 @@ class ContractorForm extends ChangeNotifier {
     password = Validator(null, null);
     confirmPassword = Validator(null, null);
     phoneNumber = Validator(null, null);
-    businessName = Validator(null, null);
-    businessType = Validator(null, null);
-    areYourRegisterdWithCipa = Validator(null, null);
-    cipaNumber = Validator(null, null);
+    // businessName = Validator(null, null);
+    //businessType = Validator(null, null);
+    // areYourRegisterdWithCipa = Validator(null, null);
+    //cipaNumber = Validator(null, null);
     omang = Validator(null, null);
     notifyListeners();
   }
@@ -201,7 +209,7 @@ class ContractorForm extends ChangeNotifier {
   // submit the form
   void submit() {
     if (isValid) {
-      // url call
+      postUsers();
     } else {
       print('Form is invalid');
     }
@@ -215,10 +223,24 @@ class ContractorForm extends ChangeNotifier {
         'password': password.value,
         'confirmPassword': confirmPassword.value,
         'phoneNumber': phoneNumber.value,
-        // 'businessName': businessName.value,
-        // 'businessType': businessType.value,
-        // 'areYourRegisterdWithCipa': areYourRegisterdWithCipa.value,
-        // 'cipaNumber': cipaNumber.value,
-        // 'omang': omang.value,
+        'omang': omang.value,
       };
+
+  Future<List<Client>?> postUsers() async {
+    try {
+      final url = Uri.parse(ApiConstants.signUp);
+      final response = await http.post(
+        url,
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode(toJson()),
+      );
+
+      if (response.statusCode == 200) {
+        print('submiteed');
+      }
+    } catch (e) {
+      log(e.toString());
+    }
+    return null;
+  }
 }
