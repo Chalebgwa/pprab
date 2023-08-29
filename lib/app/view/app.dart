@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pprab/controllers/dashboard_controller.dart';
 import 'package:pprab/forms/contractor_form.dart';
 import 'package:provider/provider.dart';
 import 'package:pprab/router.dart';
@@ -12,7 +13,10 @@ class App extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(
           create: (_) => ContractorForm(),
-        )
+        ),
+        ChangeNotifierProvider(
+          create: (_) => DashboardController(),
+        ),
       ],
       child: MaterialApp.router(
         title: 'PPRAB',

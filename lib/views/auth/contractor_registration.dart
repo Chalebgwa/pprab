@@ -8,7 +8,7 @@ import 'package:pprab/widgets/inputs.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_ui/responsive_ui.dart';
 
-import '../../../forms/contractor_form.dart';
+import '../../forms/contractor_form.dart';
 
 class ContractorRegistration extends StatefulWidget {
   const ContractorRegistration({super.key});

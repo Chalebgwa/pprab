@@ -3,7 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:pprab/views/desktop/contractor_registration/contractor_registration.dart';
+import 'package:pprab/views/auth/contractor_registration.dart';
 import 'package:pprab/widgets/logo.dart';
 import 'package:pprab/widgets/search_widget.dart';
 
@@ -110,29 +110,14 @@ class CustomNavBarDashboard extends StatelessWidget {
 
     if (size.width <= 766) {
       return Container(
-        color: HexColor('#EFF1F7'),
-        height: 80,
-        width: double.infinity,
+        color: HexColor('#3D99BE'),
+        height: 60,
+        width: MediaQuery.of(context).size.width,
         child: Row(
           children: [
-            TextField(
-              decoration: InputDecoration(
-                fillColor: Colors.white,
-                filled: true,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                  borderSide: BorderSide.none,
-                ),
-                hintText: 'Search',
-                suffix: IconButton(
-                  onPressed: () {},
-                  icon: const Icon(
-                    FontAwesomeIcons.search,
-                    color: Colors.black,
-                  ),
-                ),
-              ),
-            ),
+            const Logo(),
+            const Spacer(),
+            SearchWidget(),
             SizedBox(
               width: 20,
             ),

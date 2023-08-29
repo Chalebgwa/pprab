@@ -13,7 +13,7 @@ class DashboardContent extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: HexColor('#EFF1F7'),
-      child: SingleChildScrollView(
+      child: const SingleChildScrollView(
         child: Responsive(
           children: [
             Div(

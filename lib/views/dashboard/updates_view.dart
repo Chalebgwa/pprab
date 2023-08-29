@@ -18,7 +18,7 @@ class _UpdatesViewState extends State<UpdatesView> {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: NeumorphicContainer(
-        child: Container(
+        child: SizedBox(
           height: 279,
           child: Column(
             children: [
@@ -47,7 +47,7 @@ class _UpdatesViewState extends State<UpdatesView> {
       width: double.infinity,
       color: Colors.grey.shade300,
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        //mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           buildTab('Active Tenders', 0),
           const SizedBox(width: 10),
@@ -67,7 +67,7 @@ class _UpdatesViewState extends State<UpdatesView> {
         });
       },
       child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 8),
+        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
         decoration: BoxDecoration(
           color: _selectedIndex == index ? Colors.white : Colors.transparent,
           borderRadius: BorderRadius.circular(2),

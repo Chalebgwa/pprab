@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:pprab/controllers/dashboard_controller.dart';
 import 'package:pprab/views/dashboard/dashboard_content.dart';
 import 'package:pprab/views/dashboard/side_bar.dart';
+import 'package:pprab/views/profile/profile.dart';
 import 'package:pprab/widgets/custom_navbar.dart';
+import 'package:provider/provider.dart';
 import 'package:responsive_ui/responsive_ui.dart';
 
 class Dashboard extends StatelessWidget {
@@ -11,8 +14,29 @@ class Dashboard extends StatelessWidget {
 
   static const routeName = '/dashboard';
 
+  Widget displayPage(int index) {
+    switch (index) {
+      case 0:
+        return const DashboardContent();
+      case 1:
+        return const Profile();
+      case 2:
+        return const DashboardContent();
+      case 3:
+        return const DashboardContent();
+      case 4:
+        return const DashboardContent();
+      case 5:
+        return const DashboardContent();
+      default:
+        return const DashboardContent();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    final controller = context.watch<DashboardController>();
+
     return Scaffold(
       drawer: const Drawer(child: SideBar()),
       body: SizedBox(
@@ -81,7 +105,7 @@ class Dashboard extends StatelessWidget {
                           ],
                         ),
                       ),
-                      const DashboardContent(),
+                      displayPage(controller.selectedIndex)
                     ],
                   ),
                 ),
