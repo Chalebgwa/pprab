@@ -201,7 +201,7 @@ class ContractorForm extends ChangeNotifier {
   // submit the form
   void submit() {
     if (isValid) {
-      print(toJson());
+      // url call
     } else {
       print('Form is invalid');
     }
@@ -215,10 +215,10 @@ class ContractorForm extends ChangeNotifier {
         'password': password.value,
         'confirmPassword': confirmPassword.value,
         'phoneNumber': phoneNumber.value,
-        'businessName': businessName.value,
-        'businessType': businessType.value,
-        'areYourRegisterdWithCipa': areYourRegisterdWithCipa.value,
-        'cipaNumber': cipaNumber.value,
-        'omang': omang.value,
+        // 'businessName': businessName.value,
+        // 'businessType': businessType.value,
+        // 'areYourRegisterdWithCipa': areYourRegisterdWithCipa.value,
+        // 'cipaNumber': cipaNumber.value,
+        // 'omang': omang.value,
       };
 }
