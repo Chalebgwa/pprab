@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:pprab/forms/contractor_form.dart';
+import 'package:pprab/views/dashboard/dashboard.dart';
 import 'package:pprab/widgets/buttons.dart';
 import 'package:pprab/widgets/inputs.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_ui/responsive_ui.dart';
+
+import '../../forms/contractor_form.dart';
 
 class ContractorRegistration extends StatefulWidget {
   const ContractorRegistration({super.key});
@@ -72,33 +74,33 @@ class _ContractorFormViewState extends State<ContractorFormView> {
   Widget build(BuildContext context) {
     final form = context.watch<ContractorForm>();
 
-    return Padding(
-      padding: EdgeInsets.symmetric(
-        vertical: 100.h,
-        horizontal: 75.w,
-      ),
-      child: SingleChildScrollView(
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(
+          vertical: 100,
+          horizontal: 75,
+        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
               'Personal Information',
               style: GoogleFonts.inter(
-                fontSize: 40.sp,
+                fontSize: 40,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(
-              height: 31.h,
+            const SizedBox(
+              height: 31,
             ),
             if (currentPage == 0)
               SizedBox(
                 width: double.infinity,
                 child: Wrap(
-                  spacing: 110.w,
+                  spacing: 110,
                   runAlignment: WrapAlignment.spaceBetween,
                   alignment: WrapAlignment.spaceBetween,
-                  runSpacing: 49.h,
+                  runSpacing: 49,
                   children: [
                     Div(
                       divison: const Division(
@@ -126,6 +128,20 @@ class _ContractorFormViewState extends State<ContractorFormView> {
                         errorText: form.lastName.error,
                         onChanged: form.validateLastName,
                         placeholder: 'Doe',
+                      ),
+                    ),
+                    Div(
+                      divison: const Division(
+                        colL: 5,
+                        colM: 5,
+                        colS: 12,
+                      ),
+                      child: TextInput(
+                        label: 'Omang Number',
+                        value: form.omang.value,
+                        errorText: form.omang.error,
+                        onChanged: form.validateOmang,
+                        placeholder: '123456789',
                       ),
                     ),
                     Div(
@@ -189,112 +205,17 @@ class _ContractorFormViewState extends State<ContractorFormView> {
                   ],
                 ),
               ),
-            if (currentPage == 1)
-              SizedBox(
-                width: double.infinity,
-                child: Wrap(
-                  spacing: 110.w,
-                  runAlignment: WrapAlignment.spaceBetween,
-                  alignment: WrapAlignment.spaceBetween,
-                  runSpacing: 49.h,
-                  children: [
-                    Div(
-                      divison: const Division(
-                        colL: 5,
-                        colM: 5,
-                        colS: 12,
-                      ),
-                      child: TextInput(
-                        label: 'Name Of Company',
-                        value: form.businessName.value,
-                        errorText: form.businessName.error,
-                        onChanged: form.validateBusinessName,
-                        placeholder: 'Lema-systems',
-                      ),
-                    ),
-                    Div(
-                      divison: const Division(
-                        colL: 5,
-                        colM: 5,
-                        colS: 12,
-                      ),
-                      child: CustomDropdown(
-                        label: 'Businesss Type',
-                        value: form.businessType.value,
-                        onChanged: form.validateBusinessType,
-                        options: const ['Business Name', 'Company'],
-                      ),
-                    ),
-                    if (form.businessType.value == 'Business Name')
-                      Div(
-                        divison: const Division(
-                          colL: 5,
-                          colM: 5,
-                          colS: 12,
-                        ),
-                        child: TextInput(
-                          label: 'Omang Number',
-                          value: form.omang.value,
-                          errorText: form.omang.error,
-                          onChanged: form.validateOmang,
-                          placeholder: '123456789',
-                        ),
-                      ),
-                    if (form.businessType.value == 'Company')
-                      Div(
-                        divison: const Division(
-                          colL: 5,
-                          colM: 5,
-                          colS: 12,
-                        ),
-                        child: CustomRadio(
-                          label: 'Are You Registered With CIPA',
-                          value: form.areYourRegisterdWithCipa.value,
-                          onChanged: form.validateAreYouRegisteredWithCipa,
-                          options: const ['Yes', 'No'],
-                        ),
-                      ),
-                    if (form.businessType.value == 'Company' &&
-                        form.areYourRegisterdWithCipa.value == 'Yes')
-                      Div(
-                        divison: const Division(
-                          colL: 5,
-                          colM: 5,
-                          colS: 12,
-                        ),
-                        child: TextInput(
-                          label: 'CIPA Unique Identification Number',
-                          value: form.cipaNumber.value,
-                          onChanged: form.validateCipaNumber,
-                          errorText: form.cipaNumber.error,
-                          placeholder: '00000000',
-                        ),
-                      ),
-                    if (form.businessType.value == 'Company' &&
-                        form.areYourRegisterdWithCipa.value == 'Yes')
-                      CustomDate(
-                        value: form.dateOfBusinessRegistration.value,
-                        label: 'Date of Registration:',
-                        onChanged: (s) {
-                          form.validateDor(s);
-                          setState(() {});
-                        },
-                        errorText: form.dateOfBusinessRegistration.error,
-                      )
-                  ],
-                ),
-              ),
-            SizedBox(
-              height: 60.h,
+            const SizedBox(
+              height: 60,
             ),
             SizedBox(
               width: double.infinity,
               child: Wrap(
-                spacing: 110.w,
+                spacing: 110,
                 runAlignment: WrapAlignment.spaceBetween,
                 alignment: WrapAlignment.spaceBetween,
                 crossAxisAlignment: WrapCrossAlignment.center,
-                runSpacing: 49.h,
+                runSpacing: 49,
                 children: [
                   Div(
                     divison: const Division(
@@ -318,25 +239,38 @@ class _ContractorFormViewState extends State<ContractorFormView> {
                       colS: 5,
                     ),
                     child: FillButton(
-                      onPressed: () {
-                        if (currentPage == 0) {
-                          setState(() {
-                            currentPage = 1;
-                          });
+                      onPressed: () async {
+                        if (form.isValid) {
+                          final success = await form.postUsers();
+                          if (success && mounted) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text('Sucess'),
+                              ),
+                            );
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text('Failed'),
+                              ),
+                            );
+                          }
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('Form is invalid'),
+                            ),
+                          );
                         }
-
-
-                        
-                        form.submit();
                       },
-                      text: currentPage == 0 ? 'Next' : 'Create Account',
+                      text: 'Create Account',
                     ),
                   ),
                 ],
               ),
             ),
-            SizedBox(
-              height: 60.h,
+            const SizedBox(
+              height: 60,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -344,19 +278,21 @@ class _ContractorFormViewState extends State<ContractorFormView> {
                 Text(
                   "You have an account?",
                   style: GoogleFonts.inter(
-                    fontSize: 16.sp,
+                    fontSize: 16,
                     color: HexColor('#B3B3B3'),
                   ),
                 ),
-                SizedBox(
-                  width: 2.w,
+                const SizedBox(
+                  width: 2,
                 ),
                 TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    context.go(Dashboard.routeName);
+                  },
                   child: Text(
                     "Login",
                     style: GoogleFonts.inter(
-                      fontSize: 16.sp,
+                      fontSize: 16,
                       color: HexColor('#000000'),
                     ),
                   ),

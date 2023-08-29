@@ -1,8 +1,11 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:pprab/util/dimensions.dart';
+import 'package:pprab/widgets/corousel_card.dart';
 import 'package:pprab/widgets/custom_navbar.dart';
 import 'package:pprab/widgets/hero_section.dart';
-import 'package:pprab/widgets/logo.dart';
+import 'package:pprab/widgets/media_center.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -65,19 +68,87 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       body: CustomScrollView(
         slivers: [
-          SliverToBoxAdapter(
+          const SliverToBoxAdapter(
             child: CustomNavBar(),
           ),
-          SliverToBoxAdapter(
+          const SliverToBoxAdapter(
             child: HeroSection(),
           ),
           SliverToBoxAdapter(
-            child: Container(
-              height: 900,
-              width: double.infinity,
-              color: Colors.red,
+            child: Column(
+              children: [
+                SizedBox(
+                  height: isDesktop(context) ? 50 : 10,
+                ),
+                Text(
+                  'About IPMS',
+                  style: GoogleFonts.neuton(
+                    fontSize: isDesktop(context) ? 40 : 30,
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(
+                  height: 50,
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 50),
+                  child: Text(
+                    'The Public Procurement Regulatory Authority (PPRA), with the objective to improve the public procurement process and contractor registration , has automated the contractor registration process through the implementation of Integrated Procurement Management System (IPMS). IPMS has been interfaced with existing Government Legacy Systems to verify information in real time. We hope you have an enjoyable experience using IPMS.',
+                    textAlign: TextAlign.center,
+                    style: GoogleFonts.inter(
+                      fontSize: isDesktop(context) ? 20 : 15,
+                      color: Colors.black,
+                      fontWeight: FontWeight.w200,
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: isDesktop(context) ? 50 : 10,
+                ),
+              ],
             ),
           ),
+          SliverToBoxAdapter(
+            child: Column(
+              children: [
+                Text(
+                  'Announcements',
+                  style: GoogleFonts.neuton(
+                    fontSize: isDesktop(context) ? 40 : 30,
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(
+                  height: 50,
+                ),
+                CarouselSlider(
+                  options: CarouselOptions(
+                    height: isDesktop(context) ? null : 600,
+                    viewportFraction: 0.9,
+                    autoPlay: true,
+                    autoPlayInterval: const Duration(seconds: 10),
+                    enlargeCenterPage: true,
+                    animateToClosest: false,
+                    enlargeFactor: 0.2,
+                  ),
+                  items: [1, 2, 3, 4, 5].map((i) {
+                    return const CarouselCard(
+                      imageUrl: 'https://picsum.photos/200/300',
+                      title:
+                          'Capacity buiding workshop participants during the deliberations.',
+                      description:
+                          'Vibrant discussions took center stage as participants gathered for the Capacity Building Workshop. With a unified goal of growth, minds converged, sharing insights and knowledge.',
+                    );
+                  }).toList(),
+                ),
+              ],
+            ),
+          ),
+          const SliverToBoxAdapter(
+            child: MediaCenter(),
+          )
         ],
       ),
     );

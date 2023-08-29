@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
@@ -37,13 +37,13 @@ class _CustomDateState extends State<CustomDate> {
         Text(
           widget.label,
           style: GoogleFonts.inter(
-            fontSize: 20.sp,
+            fontSize: 20,
             fontWeight: FontWeight.bold,
             color: Colors.black,
           ),
         ),
         SizedBox(
-          height: 14.h,
+          height: 14,
         ),
         TextFormField(
           controller: controller..text = formatted ?? '',
@@ -76,12 +76,12 @@ class _CustomDateState extends State<CustomDate> {
             fillColor: HexColor('#F9F9F9'),
             hintText: 'DD/MM/YYYY',
             hintStyle: GoogleFonts.inter(
-              fontSize: 16.sp,
+              fontSize: 16,
               color: HexColor('#B3B3B3'),
             ),
             filled: true,
             border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(5.r),
+              borderRadius: BorderRadius.circular(5),
               borderSide: BorderSide.none,
             ),
             suffixIcon: IconButton(
@@ -129,13 +129,13 @@ class CustomRadio extends StatelessWidget {
         Text(
           label,
           style: GoogleFonts.inter(
-            fontSize: 20.sp,
+            fontSize: 20,
             fontWeight: FontWeight.bold,
             color: Colors.black,
           ),
         ),
         SizedBox(
-          height: 14.h,
+          height: 14,
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -154,7 +154,7 @@ class CustomRadio extends StatelessWidget {
                     title: Text(
                       e,
                       style: GoogleFonts.inter(
-                        fontSize: 16.sp,
+                        fontSize: 16,
                         color: HexColor('#000000'),
                       ),
                     ),
@@ -189,19 +189,19 @@ class CustomDropdown extends StatelessWidget {
         Text(
           label,
           style: GoogleFonts.inter(
-            fontSize: 20.sp,
+            fontSize: 20,
             fontWeight: FontWeight.bold,
             color: Colors.black,
           ),
         ),
         SizedBox(
-          height: 14.h,
+          height: 14,
         ),
         Card(
           color: HexColor('#F9F9F9'),
           elevation: 0,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(5.r),
+            borderRadius: BorderRadius.circular(5),
           ),
           child: DropdownButton<String?>(
             value: value,
@@ -210,7 +210,7 @@ class CustomDropdown extends StatelessWidget {
             alignment: Alignment.center,
 
             //padding: EdgeInsets.all(8),
-            itemHeight: 54.h,
+            itemHeight: 54,
             focusColor: HexColor('#F9F9F9'),
             items: options
                 .map(
@@ -265,13 +265,13 @@ class _TextInputState extends State<TextInput> {
         Text(
           widget.label ?? "",
           style: GoogleFonts.inter(
-            fontSize: 20.sp,
+            fontSize: 20,
             fontWeight: FontWeight.bold,
             color: Colors.black,
           ),
         ),
         SizedBox(
-          height: 14.h,
+          height: 14,
         ),
         TextFormField(
           initialValue: widget.value,
@@ -289,12 +289,12 @@ class _TextInputState extends State<TextInput> {
             fillColor: HexColor('#F9F9F9'),
             hintText: widget.placeholder,
             hintStyle: GoogleFonts.inter(
-              fontSize: 16.sp,
+              fontSize: 16,
               color: HexColor('#B3B3B3'),
             ),
             filled: true,
             border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(5.r),
+              borderRadius: BorderRadius.circular(5),
               borderSide: BorderSide.none,
             ),
             suffixIcon: widget.obscureText

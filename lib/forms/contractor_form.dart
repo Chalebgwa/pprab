@@ -211,7 +211,7 @@ class ContractorForm extends ChangeNotifier {
     if (isValid) {
       postUsers();
     } else {
-      print('Form is invalid');
+      print('Forms invalid');
     }
   }
 
@@ -226,7 +226,7 @@ class ContractorForm extends ChangeNotifier {
         'omang': omang.value,
       };
 
-  Future<List<Client>?> postUsers() async {
+  Future<bool> postUsers() async {
     try {
       final url = Uri.parse(ApiConstants.signUp);
       final response = await http.post(
@@ -235,12 +235,12 @@ class ContractorForm extends ChangeNotifier {
         body: jsonEncode(toJson()),
       );
 
-      if (response.statusCode == 200) {
-        print('submiteed');
+      if (response.statusCode == 201) {
+        return true;
       }
     } catch (e) {
       log(e.toString());
     }
-    return null;
+    return false;
   }
 }
