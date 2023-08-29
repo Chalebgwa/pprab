@@ -1,7 +1,4 @@
-
-
-
 class ApiConstants {
-  static String signUp = '146.190.196.23/api/users/signup';
-   static String  signIn = '146.190.196.23/api/users/signin';
+  static String signUp = 'https://146.190.196.23/api/users/signup/';
+  static String signIn = 'https://146.190.196.23/api/users/signin/';
 }

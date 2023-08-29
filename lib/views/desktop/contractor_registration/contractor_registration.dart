@@ -72,12 +72,12 @@ class _ContractorFormViewState extends State<ContractorFormView> {
   Widget build(BuildContext context) {
     final form = context.watch<ContractorForm>();
 
-    return Padding(
-      padding: EdgeInsets.symmetric(
-        vertical: 100,
-        horizontal: 75,
-      ),
-      child: SingleChildScrollView(
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(
+          vertical: 100,
+          horizontal: 75,
+        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -88,7 +88,7 @@ class _ContractorFormViewState extends State<ContractorFormView> {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 31,
             ),
             if (currentPage == 0)
@@ -126,6 +126,20 @@ class _ContractorFormViewState extends State<ContractorFormView> {
                         errorText: form.lastName.error,
                         onChanged: form.validateLastName,
                         placeholder: 'Doe',
+                      ),
+                    ),
+                    Div(
+                      divison: const Division(
+                        colL: 5,
+                        colM: 5,
+                        colS: 12,
+                      ),
+                      child: TextInput(
+                        label: 'Omang Number',
+                        value: form.omang.value,
+                        errorText: form.omang.error,
+                        onChanged: form.validateOmang,
+                        placeholder: '123456789',
                       ),
                     ),
                     Div(
@@ -189,102 +203,7 @@ class _ContractorFormViewState extends State<ContractorFormView> {
                   ],
                 ),
               ),
-            if (currentPage == 1)
-              SizedBox(
-                width: double.infinity,
-                child: Wrap(
-                  spacing: 110,
-                  runAlignment: WrapAlignment.spaceBetween,
-                  alignment: WrapAlignment.spaceBetween,
-                  runSpacing: 49,
-                  children: [
-                    Div(
-                      divison: const Division(
-                        colL: 5,
-                        colM: 5,
-                        colS: 12,
-                      ),
-                      child: TextInput(
-                        label: 'Name Of Company',
-                        value: form.businessName.value,
-                        errorText: form.businessName.error,
-                        onChanged: form.validateBusinessName,
-                        placeholder: 'Lema-systems',
-                      ),
-                    ),
-                    Div(
-                      divison: const Division(
-                        colL: 5,
-                        colM: 5,
-                        colS: 12,
-                      ),
-                      child: CustomDropdown(
-                        label: 'Businesss Type',
-                        value: form.businessType.value,
-                        onChanged: form.validateBusinessType,
-                        options: const ['Business Name', 'Company'],
-                      ),
-                    ),
-                    if (form.businessType.value == 'Business Name')
-                      Div(
-                        divison: const Division(
-                          colL: 5,
-                          colM: 5,
-                          colS: 12,
-                        ),
-                        child: TextInput(
-                          label: 'Omang Number',
-                          value: form.omang.value,
-                          errorText: form.omang.error,
-                          onChanged: form.validateOmang,
-                          placeholder: '123456789',
-                        ),
-                      ),
-                    if (form.businessType.value == 'Company')
-                      Div(
-                        divison: const Division(
-                          colL: 5,
-                          colM: 5,
-                          colS: 12,
-                        ),
-                        child: CustomRadio(
-                          label: 'Are You Registered With CIPA',
-                          value: form.areYourRegisterdWithCipa.value,
-                          onChanged: form.validateAreYouRegisteredWithCipa,
-                          options: const ['Yes', 'No'],
-                        ),
-                      ),
-                    if (form.businessType.value == 'Company' &&
-                        form.areYourRegisterdWithCipa.value == 'Yes')
-                      Div(
-                        divison: const Division(
-                          colL: 5,
-                          colM: 5,
-                          colS: 12,
-                        ),
-                        child: TextInput(
-                          label: 'CIPA Unique Identification Number',
-                          value: form.cipaNumber.value,
-                          onChanged: form.validateCipaNumber,
-                          errorText: form.cipaNumber.error,
-                          placeholder: '00000000',
-                        ),
-                      ),
-                    if (form.businessType.value == 'Company' &&
-                        form.areYourRegisterdWithCipa.value == 'Yes')
-                      CustomDate(
-                        value: form.dateOfBusinessRegistration.value,
-                        label: 'Date of Registration:',
-                        onChanged: (s) {
-                          form.validateDor(s);
-                          setState(() {});
-                        },
-                        errorText: form.dateOfBusinessRegistration.error,
-                      )
-                  ],
-                ),
-              ),
-            SizedBox(
+            const SizedBox(
               height: 60,
             ),
             SizedBox(
@@ -318,24 +237,37 @@ class _ContractorFormViewState extends State<ContractorFormView> {
                       colS: 5,
                     ),
                     child: FillButton(
-                      onPressed: () {
-                        if (currentPage == 0) {
-                          setState(() {
-                            currentPage = 1;
-                          });
+                      onPressed: () async {
+                        if (form.isValid) {
+                          final success = await form.postUsers();
+                          if (success && mounted) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text('Sucess'),
+                              ),
+                            );
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text('Failed'),
+                              ),
+                            );
+                          }
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('Form is invalid'),
+                            ),
+                          );
                         }
-
-
-                        
-                        form.submit();
                       },
-                      text: currentPage == 0 ? 'Next' : 'Create Account',
+                      text: 'Create Account',
                     ),
                   ),
                 ],
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 60,
             ),
             Row(
@@ -348,7 +280,7 @@ class _ContractorFormViewState extends State<ContractorFormView> {
                     color: HexColor('#B3B3B3'),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 2,
                 ),
                 TextButton(
