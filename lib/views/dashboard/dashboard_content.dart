@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:pprab/views/dashboard/basic_profile.dart';
+import 'package:pprab/views/dashboard/feedback.dart';
 import 'package:responsive_ui/responsive_ui.dart';
 
 class DashboardContent extends StatelessWidget {
@@ -22,17 +23,12 @@ class DashboardContent extends StatelessWidget {
               child: BasicProfile(),
             ),
             Div(
-              divison: Division(
-                colL: 8,
-                colM: 12,
-                colS: 12,
-              ),
-              child: Container(
-                height: 279,
-                color: Colors.green,
-                child: const Text('Menu'),
-              ),
-            ),
+                divison: Division(
+                  colL: 8,
+                  colM: 12,
+                  colS: 12,
+                ),
+                child: FeedbackView()),
             Div(
               divison: Division(
                 colL: 8,
