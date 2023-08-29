@@ -1,30 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:pprab/util/dimensions.dart';
+import 'package:pprab/widgets/neumorph.dart';
 
 class MediaCenter extends StatelessWidget {
   const MediaCenter({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: HexColor('#F5F5F5'),
-      height: 667,
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: isDesktop(context) ? 100 : 20),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+        //mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Row(
             children: [
-              const Text(
+              Text(
                 'Media Center',
-                style: TextStyle(
-                  fontSize: 30,
+                style: GoogleFonts.inter(
+                  fontSize: isDesktop(context) ? 40 : 20,
                   fontWeight: FontWeight.bold,
                 ),
               ),
               // rounded dropdown button with options Committee Decision  |Contractor Registration Requirements  |Price Guide |How To? |PPRA Procurement Plan |
               const Spacer(),
               Card(
+                color: Colors.white,
+                elevation: 0,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(30),
                 ),
@@ -84,7 +88,7 @@ class MediaCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
+    return NeumorphicContainer(
       child: SizedBox(
         width: 270,
         height: 270,

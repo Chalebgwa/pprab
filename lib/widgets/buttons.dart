@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
 
@@ -14,9 +13,8 @@ class OutlineButton extends StatelessWidget {
     return OutlinedButton(
       onPressed: onPressed,
       style: OutlinedButton.styleFrom(
-        shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.r)),
-        fixedSize: Size(220.w, 54.h),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        fixedSize: Size(220, 54),
         side: BorderSide(
           color: HexColor('#000000'),
         ),
@@ -24,7 +22,7 @@ class OutlineButton extends StatelessWidget {
       child: Text(
         text,
         style: GoogleFonts.inter(
-          fontSize: 16.sp,
+          fontSize: 16,
           color: HexColor('#000000'),
         ),
       ),
@@ -43,15 +41,14 @@ class FillButton extends StatelessWidget {
     return ElevatedButton(
       onPressed: onPressed,
       style: OutlinedButton.styleFrom(
-        shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.r)),
-        fixedSize: Size(220.w, 54.h),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        fixedSize: Size(220, 54),
         backgroundColor: HexColor('#3D99BE'),
       ),
       child: Text(
         text,
         style: GoogleFonts.inter(
-          fontSize: 16.sp,
+          fontSize: 16,
           color: HexColor('#FFFFFF'),
         ),
       ),

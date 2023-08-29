@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:pprab/forms/contractor_form.dart';
 import 'package:pprab/widgets/buttons.dart';
 import 'package:pprab/widgets/inputs.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_ui/responsive_ui.dart';
+
+import '../../../forms/contractor_form.dart';
 
 class ContractorRegistration extends StatefulWidget {
   const ContractorRegistration({super.key});
@@ -74,8 +74,8 @@ class _ContractorFormViewState extends State<ContractorFormView> {
 
     return Padding(
       padding: EdgeInsets.symmetric(
-        vertical: 100.h,
-        horizontal: 75.w,
+        vertical: 100,
+        horizontal: 75,
       ),
       child: SingleChildScrollView(
         child: Column(
@@ -84,21 +84,21 @@ class _ContractorFormViewState extends State<ContractorFormView> {
             Text(
               'Personal Information',
               style: GoogleFonts.inter(
-                fontSize: 40.sp,
+                fontSize: 40,
                 fontWeight: FontWeight.bold,
               ),
             ),
             SizedBox(
-              height: 31.h,
+              height: 31,
             ),
             if (currentPage == 0)
               SizedBox(
                 width: double.infinity,
                 child: Wrap(
-                  spacing: 110.w,
+                  spacing: 110,
                   runAlignment: WrapAlignment.spaceBetween,
                   alignment: WrapAlignment.spaceBetween,
-                  runSpacing: 49.h,
+                  runSpacing: 49,
                   children: [
                     Div(
                       divison: const Division(
@@ -193,10 +193,10 @@ class _ContractorFormViewState extends State<ContractorFormView> {
               SizedBox(
                 width: double.infinity,
                 child: Wrap(
-                  spacing: 110.w,
+                  spacing: 110,
                   runAlignment: WrapAlignment.spaceBetween,
                   alignment: WrapAlignment.spaceBetween,
-                  runSpacing: 49.h,
+                  runSpacing: 49,
                   children: [
                     Div(
                       divison: const Division(
@@ -285,16 +285,16 @@ class _ContractorFormViewState extends State<ContractorFormView> {
                 ),
               ),
             SizedBox(
-              height: 60.h,
+              height: 60,
             ),
             SizedBox(
               width: double.infinity,
               child: Wrap(
-                spacing: 110.w,
+                spacing: 110,
                 runAlignment: WrapAlignment.spaceBetween,
                 alignment: WrapAlignment.spaceBetween,
                 crossAxisAlignment: WrapCrossAlignment.center,
-                runSpacing: 49.h,
+                runSpacing: 49,
                 children: [
                   Div(
                     divison: const Division(
@@ -333,7 +333,7 @@ class _ContractorFormViewState extends State<ContractorFormView> {
               ),
             ),
             SizedBox(
-              height: 60.h,
+              height: 60,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -341,19 +341,19 @@ class _ContractorFormViewState extends State<ContractorFormView> {
                 Text(
                   "You have an account?",
                   style: GoogleFonts.inter(
-                    fontSize: 16.sp,
+                    fontSize: 16,
                     color: HexColor('#B3B3B3'),
                   ),
                 ),
                 SizedBox(
-                  width: 2.w,
+                  width: 2,
                 ),
                 TextButton(
                   onPressed: () {},
                   child: Text(
                     "Login",
                     style: GoogleFonts.inter(
-                      fontSize: 16.sp,
+                      fontSize: 16,
                       color: HexColor('#000000'),
                     ),
                   ),

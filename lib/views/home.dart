@@ -125,20 +125,13 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 CarouselSlider(
                   options: CarouselOptions(
-                    height: 600,
-                    aspectRatio: 16 / 9,
+                    height: isDesktop(context) ? null : 600,
                     viewportFraction: 0.9,
-                    initialPage: 0,
-                    enableInfiniteScroll: true,
-                    reverse: false,
                     autoPlay: true,
                     autoPlayInterval: const Duration(seconds: 10),
-                    autoPlayAnimationDuration:
-                        const Duration(milliseconds: 800),
-                    autoPlayCurve: Curves.fastOutSlowIn,
                     enlargeCenterPage: true,
+                    animateToClosest: false,
                     enlargeFactor: 0.2,
-                    scrollDirection: Axis.horizontal,
                   ),
                   items: [1, 2, 3, 4, 5].map((i) {
                     return const CarouselCard(

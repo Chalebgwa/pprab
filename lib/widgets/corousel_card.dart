@@ -39,8 +39,8 @@ class CarouselCard extends StatelessWidget {
         ),
         Div(
           divison: const Division(
-            colL: 7,
-            colM: 7,
+            colL: 5,
+            colM: 5,
             colS: 12,
           ),
           child: Container(
@@ -54,7 +54,7 @@ class CarouselCard extends StatelessWidget {
               ),
             ),
             child: Padding(
-              padding: const EdgeInsets.all(27.0),
+              padding: const EdgeInsets.all(27),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
