@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:hexcolor/hexcolor.dart';
 
 class NeumorphicContainer extends StatelessWidget {
+  const NeumorphicContainer({required this.child, super.key});
   final Widget child;
-
-  NeumorphicContainer({required this.child});
 
   @override
   Widget build(BuildContext context) {
     return Container(
+      clipBehavior: Clip.hardEdge,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15.0),
         gradient: LinearGradient(
@@ -17,26 +18,29 @@ class NeumorphicContainer extends StatelessWidget {
             Colors.grey.shade50,
             Colors.grey.shade100,
           ],
-          stops: [
+          stops: const [
             0.1,
             0.3,
           ],
         ),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.shade200,
-            offset: Offset(-5.0, -5.0),
-            blurRadius: 10.0,
+            color: Colors.grey.shade300,
+            offset: const Offset(-2, -2),
+            blurRadius: 1,
           ),
           BoxShadow(
-            color: Colors.white,
-            offset: Offset(5.0, 5.0),
-            blurRadius: 10.0,
+            color: Colors.grey.shade50,
+            offset: Offset(2, 2),
+            blurRadius: 1,
           ),
         ],
       ),
-      padding: EdgeInsets.all(20.0),
-      child: child,
+      child: Container(
+        padding: const EdgeInsets.all(20),
+        child: child,
+        color: HexColor('#EFF1F7'),
+      ),
     );
   }
 }

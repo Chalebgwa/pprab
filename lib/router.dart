@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:pprab/views/dashboard/dashboard.dart';
 import 'package:pprab/views/desktop/contractor_registration/contractor_registration.dart';
 import 'package:pprab/views/home.dart';
 import 'package:provider/provider.dart';
@@ -11,18 +12,19 @@ final router = GoRouter(
   routes: [
     GoRoute(
       path: ContractorRegistration.routeName,
-      pageBuilder: (context, state) => MaterialPage(
-        child: ChangeNotifierProvider(
-          create: (_) => ContractorForm(),
-          child: const ContractorRegistration(),
-        ),
-      ),
+      builder: (context, state) {
+        return const ContractorRegistration();
+      },
+    ),
+    GoRoute(
+      path: Dashboard.routeName,
+      builder: (context, state) {
+        return const Dashboard();
+      },
     ),
     GoRoute(
       path: HomeScreen.routeName,
-      pageBuilder: (context, state) => const MaterialPage(
-        child: HomeScreen(),
-      ),
+      builder: (context, state) => const HomeScreen(),
     ),
   ],
   errorPageBuilder: (context, state) => MaterialPage(

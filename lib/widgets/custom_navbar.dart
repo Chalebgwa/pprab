@@ -101,6 +101,167 @@ class CustomNavBar extends StatelessWidget {
   }
 }
 
+class CustomNavBarDashboard extends StatelessWidget {
+  const CustomNavBarDashboard({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+
+    if (size.width <= 766) {
+      return Container(
+        color: HexColor('#EFF1F7'),
+        height: 80,
+        width: double.infinity,
+        child: Row(
+          children: [
+            TextField(
+              decoration: InputDecoration(
+                fillColor: Colors.white,
+                filled: true,
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                  borderSide: BorderSide.none,
+                ),
+                hintText: 'Search',
+                suffix: IconButton(
+                  onPressed: () {},
+                  icon: const Icon(
+                    FontAwesomeIcons.search,
+                    color: Colors.black,
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(
+              width: 20,
+            ),
+            IconButton(
+              onPressed: () {
+                if (Scaffold.of(context).isDrawerOpen) {
+                  Scaffold.of(context).closeDrawer();
+                } else {
+                  Scaffold.of(context).openDrawer();
+                }
+              },
+              icon: const Icon(
+                FontAwesomeIcons.bars,
+                color: Colors.white,
+              ),
+            ),
+            SizedBox(
+              width: 30,
+            )
+          ],
+        ),
+      );
+    }
+
+    return Container(
+      color: HexColor('#EFF1F7'),
+      height: 80,
+      width: double.infinity,
+      child: Row(
+        children: [
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: SizedBox(
+                height: 54,
+                child: TextField(
+                  decoration: InputDecoration(
+                    fillColor: Colors.white,
+                    filled: true,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: BorderSide.none,
+                    ),
+                    hintText: 'Search',
+                    hintStyle: GoogleFonts.inter(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w400,
+                    ),
+                    suffixIcon: IconButton(
+                      onPressed: () {},
+                      iconSize: 15,
+                      color: HexColor('#B3B3B3'),
+                      icon: const Icon(
+                        FontAwesomeIcons.search,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(
+            width: 45,
+          ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Text(
+                'John Doe',
+                style: GoogleFonts.inter(
+                  color: HexColor('#1A1A1A'),
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              Text(
+                'Company rep',
+                style: GoogleFonts.inter(
+                  color: HexColor('#1A1A1A'),
+                  fontSize: 11,
+                  fontWeight: FontWeight.normal,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(
+            width: 20,
+          ),
+          // black bell with badge
+          Stack(
+            children: [
+              const Icon(
+                FontAwesomeIcons.solidBell,
+                color: Colors.black,
+              ),
+              Positioned(
+                top: 0,
+                right: 0,
+                child: Container(
+                  alignment: Alignment.center,
+                  width: 15,
+                  height: 15,
+                  decoration: BoxDecoration(
+                    color: HexColor('#3D99BE'),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Text(
+                    '2',
+                    style: GoogleFonts.inter(
+                      color: Colors.white,
+                      fontSize: 10,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(
+            width: 20,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
 class Navbar extends StatelessWidget {
   const Navbar({
     required this.label,

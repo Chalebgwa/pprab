@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:pprab/views/dashboard/dashboard.dart';
 import 'package:pprab/widgets/buttons.dart';
 import 'package:pprab/widgets/inputs.dart';
 import 'package:provider/provider.dart';
@@ -284,7 +286,9 @@ class _ContractorFormViewState extends State<ContractorFormView> {
                   width: 2,
                 ),
                 TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    context.go(Dashboard.routeName);
+                  },
                   child: Text(
                     "Login",
                     style: GoogleFonts.inter(
