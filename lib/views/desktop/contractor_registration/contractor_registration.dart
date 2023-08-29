@@ -324,6 +324,9 @@ class _ContractorFormViewState extends State<ContractorFormView> {
                             currentPage = 1;
                           });
                         }
+
+
+                        
                         form.submit();
                       },
                       text: currentPage == 0 ? 'Next' : 'Create Account',
