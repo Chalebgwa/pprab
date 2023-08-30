@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:pprab/controllers/dashboard_controller.dart';
+import 'package:pprab/views/profile/profile_company_details.dart';
+import 'package:pprab/views/profile/widgets/breadcrumbs.dart';
 import 'package:pprab/widgets/buttons.dart';
 import 'package:pprab/widgets/neumorph.dart';
+import 'package:provider/provider.dart';
 import 'package:responsive_ui/responsive_ui.dart';
 
 enum ProfileStatus {
@@ -14,64 +18,98 @@ enum ProfileStatus {
 class Profile extends StatelessWidget {
   const Profile({super.key});
 
+  Widget getPage(int page) {
+    switch (page) {
+      case 0:
+        return _profileLandingPage();
+
+      case 1:
+        return const ProfileCompanyDetails();
+
+      default:
+        return _profileLandingPage();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    final page = context.watch<DashboardController>().selectedBreadcrumbIndex;
+    return Column(
+      children: [
+        if (page != 0) ProfileBreadCrumbs(),
+        getPage(page),
+      ],
+    );
+  }
+
+  Wrap _profileLandingPage() {
     return const Wrap(
       children: [
         ProfileContent(
           status: ProfileStatus.complete,
           title: 'Company Details',
           icon: FontAwesomeIcons.store,
+          page: 1,
         ),
         ProfileContent(
           status: ProfileStatus.inprogress,
           title: 'Company Address Details',
           icon: FontAwesomeIcons.locationDot,
+          page: 2,
         ),
         ProfileContent(
           status: ProfileStatus.incomplete,
           title: 'Primary & Secondary Contact',
           icon: FontAwesomeIcons.phone,
+          page: 3,
         ),
         ProfileContent(
           status: ProfileStatus.incomplete,
           title: 'Details of Banker',
           icon: FontAwesomeIcons.creditCard,
+          page: 4,
         ),
         ProfileContent(
           status: ProfileStatus.incomplete,
           title: 'Details of Affliates',
           icon: FontAwesomeIcons.userPlus,
+          page: 5,
         ),
         ProfileContent(
           status: ProfileStatus.incomplete,
           title: 'List of Directors',
           icon: FontAwesomeIcons.listCheck,
+          page: 6,
         ),
         ProfileContent(
           status: ProfileStatus.incomplete,
           title: 'Details of Employess in Botswana',
           icon: FontAwesomeIcons.list,
+          page: 7,
         ),
         ProfileContent(
           status: ProfileStatus.incomplete,
           title: 'Vehicles & Equipment',
           icon: FontAwesomeIcons.truckMoving,
+          page: 8,
         ),
         ProfileContent(
           status: ProfileStatus.incomplete,
           title: 'Details of Projects',
           icon: FontAwesomeIcons.listCheck,
+          page: 9,
         ),
         ProfileContent(
           status: ProfileStatus.incomplete,
           title: 'Details of Company',
           icon: FontAwesomeIcons.listCheck,
+          page: 10,
         ),
         ProfileContent(
           status: ProfileStatus.incomplete,
           title: 'Upload Supporting Document',
           icon: FontAwesomeIcons.upload,
+          page: 11,
         ),
       ],
     );
@@ -83,12 +121,14 @@ class ProfileContent extends StatelessWidget {
     required this.status,
     required this.title,
     required this.icon,
+    required this.page,
     super.key,
   });
 
   final ProfileStatus status;
   final String title;
   final IconData icon;
+  final int page;
 
   Color get color {
     switch (status) {
@@ -114,6 +154,7 @@ class ProfileContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = context.watch<DashboardController>();
     return Div(
       divison: const Division(
         colL: 3,
@@ -134,7 +175,7 @@ class ProfileContent extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      Spacer(),
+                      const Spacer(),
                       Icon(
                         icon,
                         size: 50,
@@ -150,9 +191,11 @@ class ProfileContent extends StatelessWidget {
                           fontWeight: FontWeight.w600,
                         ),
                       ),
-                      Spacer(),
+                      const Spacer(),
                       FillButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          controller.setSelectedBreadcrumbIndex(page);
+                        },
                         text: getButtonlabel(),
                       )
                     ],

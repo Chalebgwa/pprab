@@ -42,7 +42,7 @@ class _CustomDateState extends State<CustomDate> {
             color: Colors.black,
           ),
         ),
-        SizedBox(
+        const SizedBox(
           height: 14,
         ),
         TextFormField(
@@ -85,7 +85,7 @@ class _CustomDateState extends State<CustomDate> {
               borderSide: BorderSide.none,
             ),
             suffixIcon: IconButton(
-              icon: FaIcon(FontAwesomeIcons.calendarAlt),
+              icon: const FaIcon(FontAwesomeIcons.calendarAlt),
               onPressed: () async {
                 final date = await showDatePicker(
                   context: context,
@@ -134,7 +134,7 @@ class CustomRadio extends StatelessWidget {
             color: Colors.black,
           ),
         ),
-        SizedBox(
+        const SizedBox(
           height: 14,
         ),
         Row(
@@ -194,7 +194,7 @@ class CustomDropdown extends StatelessWidget {
             color: Colors.black,
           ),
         ),
-        SizedBox(
+        const SizedBox(
           height: 14,
         ),
         Card(
@@ -204,10 +204,14 @@ class CustomDropdown extends StatelessWidget {
             borderRadius: BorderRadius.circular(5),
           ),
           child: DropdownButton<String?>(
+            hint: const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 8.0),
+              child: Text('Select'),
+            ),
             value: value,
             underline: Container(),
             isExpanded: true,
-            alignment: Alignment.center,
+            //alignment: Alignment,
 
             //padding: EdgeInsets.all(8),
             itemHeight: 54,
@@ -270,7 +274,7 @@ class _TextInputState extends State<TextInput> {
             color: Colors.black,
           ),
         ),
-        SizedBox(
+        const SizedBox(
           height: 14,
         ),
         TextFormField(
