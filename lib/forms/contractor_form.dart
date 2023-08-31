@@ -235,7 +235,7 @@ class ContractorForm extends ChangeNotifier {
         body: jsonEncode(toJson()),
       );
 
-      if (response.statusCode == 200) {
+      if (response.statusCode == 201) {
         print('submiteed');
       }
     } catch (e) {
