@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pprab/controllers/dashboard_controller.dart';
+import 'package:pprab/views/details_of_bankers.dart';
+import 'package:pprab/views/profile/company_address_details.dart';
+import 'package:pprab/views/profile/contact_details.dart';
 import 'package:pprab/views/profile/profile_company_details.dart';
 import 'package:pprab/views/profile/widgets/breadcrumbs.dart';
 import 'package:pprab/widgets/buttons.dart';
@@ -25,6 +28,15 @@ class Profile extends StatelessWidget {
 
       case 1:
         return const ProfileCompanyDetails();
+
+      case 2:
+        return const CompanyAddressDetails();
+
+      case 3:
+        return const ContactDetails();
+
+      case 4:
+        return const DetailsOfBankers();
 
       default:
         return _profileLandingPage();

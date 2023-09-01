@@ -245,6 +245,7 @@ class TextInput extends StatefulWidget {
     this.errorText,
     this.onChanged,
     this.value,
+    this.isCell = false,
   });
 
   final String? label;
@@ -253,6 +254,7 @@ class TextInput extends StatefulWidget {
   final bool obscureText;
   final void Function(String)? onChanged;
   final String? value;
+  final bool isCell;
 
   @override
   State<TextInput> createState() => _TextInputState();
@@ -263,61 +265,141 @@ class _TextInputState extends State<TextInput> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          widget.label ?? "",
-          style: GoogleFonts.inter(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-            color: Colors.black,
-          ),
-        ),
-        const SizedBox(
-          height: 14,
-        ),
-        TextFormField(
-          initialValue: widget.value,
-          onSaved: (value) {
-            widget.onChanged?.call(value ?? '');
-          },
-          decoration: InputDecoration(
-            //labelText: label,
+    return Container(
+      color: Colors.red,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          if (widget.isCell)
+            Text(
+              widget.label ?? "",
+              style: GoogleFonts.inter(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
+              ),
+            ),
+          if (widget.isCell == false)
+            const SizedBox(
+              height: 14,
+            ),
+          TextFormField(
+            initialValue: widget.value,
+            onSaved: (value) {
+              widget.onChanged?.call(value ?? '');
+            },
+            decoration: InputDecoration(
+              //labelText: label,
 
-            isDense: true,
-            errorText: widget.errorText,
-            errorStyle: GoogleFonts.inter(
-              color: Colors.red,
+              isDense: true,
+              errorText: widget.errorText,
+              errorStyle: GoogleFonts.inter(
+                color: Colors.red,
+              ),
+              fillColor: HexColor('#F9F9F9'),
+              hintText: widget.placeholder,
+              hintStyle: GoogleFonts.inter(
+                fontSize: 16,
+                color: HexColor('#B3B3B3'),
+              ),
+              filled: true,
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(5),
+                borderSide: BorderSide.none,
+              ),
+              suffixIcon: widget.obscureText
+                  ? IconButton(
+                      icon: FaIcon(showText
+                          ? FontAwesomeIcons.eye
+                          : FontAwesomeIcons.eyeSlash),
+                      onPressed: () {
+                        setState(() {
+                          showText = !showText;
+                        });
+                      },
+                    )
+                  : null,
             ),
-            fillColor: HexColor('#F9F9F9'),
-            hintText: widget.placeholder,
-            hintStyle: GoogleFonts.inter(
-              fontSize: 16,
-              color: HexColor('#B3B3B3'),
-            ),
-            filled: true,
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(5),
-              borderSide: BorderSide.none,
-            ),
-            suffixIcon: widget.obscureText
-                ? IconButton(
-                    icon: FaIcon(showText
-                        ? FontAwesomeIcons.eye
-                        : FontAwesomeIcons.eyeSlash),
-                    onPressed: () {
-                      setState(() {
-                        showText = !showText;
-                      });
-                    },
-                  )
-                : null,
+            obscureText: widget.obscureText && showText,
+            onChanged: widget.onChanged,
           ),
-          obscureText: widget.obscureText && showText,
-          onChanged: widget.onChanged,
+        ],
+      ),
+    );
+  }
+}
+
+class TextCell extends StatefulWidget {
+  const TextCell({
+    this.obscureText = false,
+    super.key,
+    this.label,
+    this.placeholder,
+    this.errorText,
+    this.onChanged,
+    this.value,
+    this.isCell = false,
+  });
+
+  final String? label;
+  final String? placeholder;
+  final String? errorText;
+  final bool obscureText;
+  final void Function(String)? onChanged;
+  final String? value;
+  final bool isCell;
+
+  @override
+  State<TextCell> createState() => _TextCellState();
+}
+
+class _TextCellState extends State<TextCell> {
+  bool showText = true;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: Colors.red,
+      child: TextFormField(
+        initialValue: widget.value,
+        onSaved: (value) {
+          widget.onChanged?.call(value ?? '');
+        },
+        decoration: InputDecoration(
+          //labelText: label,
+
+          isDense: true,
+          errorText: widget.errorText,
+          errorStyle: GoogleFonts.inter(
+            color: Colors.red,
+          ),
+          fillColor: HexColor('#F9F9F9'),
+          hintText: widget.placeholder,
+          hintStyle: GoogleFonts.inter(
+            fontSize: 16,
+            color: HexColor('#B3B3B3'),
+          ),
+          filled: true,
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(0),
+            borderSide: BorderSide.none,
+          ),
+          suffixIcon: widget.obscureText
+              ? IconButton(
+                  icon: FaIcon(showText
+                      ? FontAwesomeIcons.eye
+                      : FontAwesomeIcons.eyeSlash),
+                  onPressed: () {
+                    setState(() {
+                      showText = !showText;
+                    });
+                  },
+                )
+              : null,
         ),
-      ],
+        obscureText: widget.obscureText && showText,
+        onChanged: widget.onChanged,
+      ),
     );
   }
 }
