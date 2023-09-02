@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:pprab/views/profile/forms/bank_details_form.dart';
-import 'package:pprab/views/profile/forms/list_of_directors.dart';
+import 'package:pprab/views/profile/forms/list_of_Shareholders.dart';
 import 'package:pprab/views/profile/widgets/label.dart';
 import 'package:pprab/widgets/buttons.dart';
 import 'package:pprab/widgets/inputs.dart';
@@ -10,19 +10,19 @@ import 'package:pprab/widgets/responsive_table.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_ui/responsive_ui.dart';
 
-class ListOfDirectors extends StatefulWidget {
-  const ListOfDirectors({super.key});
+class ListOfShareholders extends StatefulWidget {
+  const ListOfShareholders({super.key});
 
   @override
-  State<ListOfDirectors> createState() => _ListOfDirectorsState();
+  State<ListOfShareholders> createState() => _ListOfShareholdersState();
 }
 
-class _ListOfDirectorsState extends State<ListOfDirectors> {
-  late ListOfDirectorsForm form;
+class _ListOfShareholdersState extends State<ListOfShareholders> {
+  late ListOfshareHoldersForm form;
 
   @override
   void didChangeDependencies() {
-    form = context.read<ListOfDirectorsForm>();
+    form = context.read<ListOfshareHoldersForm>();
     super.didChangeDependencies();
   }
 
@@ -35,7 +35,7 @@ class _ListOfDirectorsState extends State<ListOfDirectors> {
       child: Wrap(
         children: [
           const ProfileLabel(
-            title: 'List Of Directors',
+            title: 'List Of Shareholders',
             icon: FontAwesomeIcons.creditCard,
           ),
           ResponsiveTable(
@@ -47,7 +47,7 @@ class _ListOfDirectorsState extends State<ListOfDirectors> {
               'Date Of Birth',
             ],
             rows: [
-              for (DirectorRow row in form.rows)
+              for (shareHolderRow row in form.rows)
                 [
                   TextCell(
                     //label: 'Name of Bank',

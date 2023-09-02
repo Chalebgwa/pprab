@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:pprab/views/profile/forms/bank_details_form.dart';
-import 'package:pprab/views/profile/forms/list_of_directors.dart';
+import 'package:pprab/views/profile/forms/employee_details_form.dart';
+import 'package:pprab/views/profile/forms/list_of_Shareholders.dart';
 import 'package:pprab/views/profile/widgets/label.dart';
 import 'package:pprab/widgets/buttons.dart';
 import 'package:pprab/widgets/inputs.dart';
@@ -10,19 +11,19 @@ import 'package:pprab/widgets/responsive_table.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_ui/responsive_ui.dart';
 
-class ListOfDirectors extends StatefulWidget {
-  const ListOfDirectors({super.key});
+class DetailsOfEmployees extends StatefulWidget {
+  const DetailsOfEmployees({super.key});
 
   @override
-  State<ListOfDirectors> createState() => _ListOfDirectorsState();
+  State<DetailsOfEmployees> createState() => _DetailsOfEmployeesState();
 }
 
-class _ListOfDirectorsState extends State<ListOfDirectors> {
-  late ListOfDirectorsForm form;
+class _DetailsOfEmployeesState extends State<DetailsOfEmployees> {
+  late ListOfEmployeesForm form;
 
   @override
   void didChangeDependencies() {
-    form = context.read<ListOfDirectorsForm>();
+    form = context.read<ListOfEmployeesForm>();
     super.didChangeDependencies();
   }
 
@@ -33,10 +34,51 @@ class _ListOfDirectorsState extends State<ListOfDirectors> {
     return Padding(
       padding: const EdgeInsets.all(34.0),
       child: Wrap(
+        spacing: 60,
+        runSpacing: 100,
         children: [
           const ProfileLabel(
-            title: 'List Of Directors',
-            icon: FontAwesomeIcons.creditCard,
+            title: 'Details of Employess in Botswana',
+            icon: FontAwesomeIcons.alignRight,
+          ),
+          Div(
+            divison: const Division(
+              colL: 5,
+              colM: 12,
+              colS: 12,
+            ),
+            child: TextInput(
+              label: 'Total Number of Employees in Botswana',
+              onChanged: form.changeTotalNumberOfBotsswanaEmployees,
+              value: form.totalNumberOfBotsswanaEmployees.value,
+              errorText: form.totalNumberOfBotsswanaEmployees.error,
+            ),
+          ),
+          Div(
+            divison: const Division(
+              colL: 5,
+              colM: 12,
+              colS: 12,
+            ),
+            child: TextInput(
+              label: 'Total Number of other nationalities',
+              onChanged: form.changeTotalNumberOfExpatriateEmployees,
+              value: form.totalNumberOfExpatriateEmployees.value,
+              errorText: form.totalNumberOfExpatriateEmployees.error,
+            ),
+          ),
+          Div(
+            divison: const Division(
+              colL: 5,
+              colM: 12,
+              colS: 12,
+            ),
+            child: TextInput(
+              label: 'Total Employed',
+              onChanged: form.changeTotalNumberOfEmployees,
+              value: form.totalNumberOfEmployees.value,
+              errorText: form.totalNumberOfEmployees.error,
+            ),
           ),
           ResponsiveTable(
             headers: const [
@@ -47,7 +89,7 @@ class _ListOfDirectorsState extends State<ListOfDirectors> {
               'Date Of Birth',
             ],
             rows: [
-              for (DirectorRow row in form.rows)
+              for (EmployeeRow row in form.rows)
                 [
                   TextCell(
                     //label: 'Name of Bank',

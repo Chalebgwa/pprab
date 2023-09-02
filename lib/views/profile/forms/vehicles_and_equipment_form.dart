@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:pprab/forms/validator.dart';
 
@@ -283,7 +285,7 @@ class BuildingAndProperty {
   Validator ownership = Validator(null, null);
   Validator locality = Validator(null, null);
   Validator presentValue = Validator(null, null);
-  Validator attachments = Validator(null, null);
+  FileValidator attachments = FileValidator(null, null);
 
   void validateOwnership(String value) {
     if (value.isEmpty) {
@@ -315,11 +317,11 @@ class BuildingAndProperty {
     notifyListeners();
   }
 
-  void validateAttachments(String value) {
-    if (value.isEmpty) {
-      attachments = Validator(value, 'Please enter the attachments');
+  void validateAttachments(Uint8List? value) {
+    if (value == null || value.isEmpty) {
+      attachments = FileValidator(value, 'Please enter the attachments');
     } else {
-      attachments = Validator(value, null);
+      attachments = FileValidator(value, null);
     }
 
     notifyListeners();
@@ -347,7 +349,7 @@ class OfficeEquipment {
 
   Validator officeEquipment = Validator(null, null);
   Validator presentValue = Validator(null, null);
-  Validator attachments = Validator(null, null);
+  FileValidator attachments = FileValidator(null, null);
 
   void validateOfficeEquipment(String value) {
     if (value.isEmpty) {
@@ -369,11 +371,11 @@ class OfficeEquipment {
     notifyListeners();
   }
 
-  void validateAttachments(String value) {
-    if (value.isEmpty) {
-      attachments = Validator(value, 'Please enter the attachments');
+  void validateAttachments(Uint8List? value) {
+    if (value == null || value.isEmpty) {
+      attachments = FileValidator(value, 'Please enter the attachments');
     } else {
-      attachments = Validator(value, null);
+      attachments = FileValidator(value, null);
     }
 
     notifyListeners();

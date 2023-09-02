@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pprab/forms/validator.dart';
 
-class DetailsOfSecretary extends ChangeNotifier {
+class DetailsOfSecretaryForm extends ChangeNotifier {
   Validator fullName = Validator(null, null);
   Validator nationality = Validator(null, null);
   Validator passportNumber = Validator(null, null);

@@ -1,9 +1,45 @@
-import 'package:flutter/material.dart';
+import 'dart:typed_data';
 
+import 'package:file_picker/file_picker.dart';
+import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:intl/intl.dart';
+
+class CustomFilePicker extends StatelessWidget {
+  const CustomFilePicker({super.key, this.value, required this.onChanged});
+  final Uint8List? value;
+  final void Function(Uint8List?) onChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      onTap: () async {
+        final result = await FilePicker.platform.pickFiles(
+          type: FileType.custom,
+          allowMultiple: true,
+          allowedExtensions: ['pdf'],
+        );
+
+        if (result != null) {
+          onChanged(result.files.first.bytes);
+        }
+      },
+      leading: const FaIcon(
+        FontAwesomeIcons.paperclip,
+        color: Colors.black,
+      ),
+      title: Text(
+        value != null ? 'Attached' : 'Attach File',
+        style: const TextStyle(
+          color: Colors.black,
+          fontSize: 16,
+        ),
+      ),
+    );
+  }
+}
 
 class CustomDate extends StatefulWidget {
   const CustomDate({
@@ -265,66 +301,61 @@ class _TextInputState extends State<TextInput> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.red,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          if (widget.isCell)
-            Text(
-              widget.label ?? "",
-              style: GoogleFonts.inter(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
-              ),
-            ),
-          if (widget.isCell == false)
-            const SizedBox(
-              height: 14,
-            ),
-          TextFormField(
-            initialValue: widget.value,
-            onSaved: (value) {
-              widget.onChanged?.call(value ?? '');
-            },
-            decoration: InputDecoration(
-              //labelText: label,
-
-              isDense: true,
-              errorText: widget.errorText,
-              errorStyle: GoogleFonts.inter(
-                color: Colors.red,
-              ),
-              fillColor: HexColor('#F9F9F9'),
-              hintText: widget.placeholder,
-              hintStyle: GoogleFonts.inter(
-                fontSize: 16,
-                color: HexColor('#B3B3B3'),
-              ),
-              filled: true,
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(5),
-                borderSide: BorderSide.none,
-              ),
-              suffixIcon: widget.obscureText
-                  ? IconButton(
-                      icon: FaIcon(showText
-                          ? FontAwesomeIcons.eye
-                          : FontAwesomeIcons.eyeSlash),
-                      onPressed: () {
-                        setState(() {
-                          showText = !showText;
-                        });
-                      },
-                    )
-                  : null,
-            ),
-            obscureText: widget.obscureText && showText,
-            onChanged: widget.onChanged,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          widget.label ?? "",
+          style: GoogleFonts.inter(
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+            color: Colors.black,
           ),
-        ],
-      ),
+        ),
+        const SizedBox(
+          height: 14,
+        ),
+        TextFormField(
+          initialValue: widget.value,
+          onSaved: (value) {
+            widget.onChanged?.call(value ?? '');
+          },
+          decoration: InputDecoration(
+            //labelText: label,
+
+            isDense: true,
+            errorText: widget.errorText,
+            errorStyle: GoogleFonts.inter(
+              color: Colors.red,
+            ),
+            fillColor: HexColor('#F9F9F9'),
+            hintText: widget.placeholder,
+            hintStyle: GoogleFonts.inter(
+              fontSize: 16,
+              color: HexColor('#B3B3B3'),
+            ),
+            filled: true,
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(5),
+              borderSide: BorderSide.none,
+            ),
+            suffixIcon: widget.obscureText
+                ? IconButton(
+                    icon: FaIcon(showText
+                        ? FontAwesomeIcons.eye
+                        : FontAwesomeIcons.eyeSlash),
+                    onPressed: () {
+                      setState(() {
+                        showText = !showText;
+                      });
+                    },
+                  )
+                : null,
+          ),
+          obscureText: widget.obscureText && showText,
+          onChanged: widget.onChanged,
+        ),
+      ],
     );
   }
 }
@@ -358,48 +389,134 @@ class _TextCellState extends State<TextCell> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.red,
-      child: TextFormField(
-        initialValue: widget.value,
-        onSaved: (value) {
-          widget.onChanged?.call(value ?? '');
-        },
-        decoration: InputDecoration(
-          //labelText: label,
+    return TextFormField(
+      initialValue: widget.value,
+      onSaved: (value) {
+        widget.onChanged?.call(value ?? '');
+      },
+      decoration: InputDecoration(
+        //labelText: label,
 
-          isDense: true,
-          errorText: widget.errorText,
-          errorStyle: GoogleFonts.inter(
-            color: Colors.red,
-          ),
-          fillColor: HexColor('#F9F9F9'),
-          hintText: widget.placeholder,
-          hintStyle: GoogleFonts.inter(
-            fontSize: 16,
-            color: HexColor('#B3B3B3'),
-          ),
-          filled: true,
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(0),
-            borderSide: BorderSide.none,
-          ),
-          suffixIcon: widget.obscureText
-              ? IconButton(
-                  icon: FaIcon(showText
-                      ? FontAwesomeIcons.eye
-                      : FontAwesomeIcons.eyeSlash),
-                  onPressed: () {
-                    setState(() {
-                      showText = !showText;
-                    });
-                  },
-                )
-              : null,
+        isDense: true,
+        errorText: widget.errorText,
+        errorStyle: GoogleFonts.inter(
+          color: Colors.red,
         ),
-        obscureText: widget.obscureText && showText,
-        onChanged: widget.onChanged,
+        fillColor: HexColor('#F9F9F9'),
+        hintText: widget.placeholder,
+        hintStyle: GoogleFonts.inter(
+          fontSize: 16,
+          color: HexColor('#B3B3B3'),
+        ),
+        filled: true,
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(0),
+          borderSide: BorderSide.none,
+        ),
+        suffixIcon: widget.obscureText
+            ? IconButton(
+                icon: FaIcon(showText
+                    ? FontAwesomeIcons.eye
+                    : FontAwesomeIcons.eyeSlash),
+                onPressed: () {
+                  setState(() {
+                    showText = !showText;
+                  });
+                },
+              )
+            : null,
       ),
+      obscureText: widget.obscureText && showText,
+      onChanged: (v) {
+        setState(() {
+          widget.onChanged?.call(v);
+        });
+      },
+    );
+  }
+}
+
+class CellDate extends StatefulWidget {
+  const CellDate({
+    required this.value,
+    required this.onChanged,
+    super.key,
+    this.errorText,
+  });
+
+  final String? value;
+  final void Function(String) onChanged;
+  final String? errorText;
+
+  @override
+  State<CellDate> createState() => _CellDateState();
+}
+
+class _CellDateState extends State<CellDate> {
+  TextEditingController controller = TextEditingController();
+  @override
+  Widget build(BuildContext context) {
+    final date = DateTime.tryParse(widget.value ?? '');
+    final formatter = DateFormat('dd/MM/yyyy');
+    final formatted = date != null ? formatter.format(date) : null;
+
+    return TextFormField(
+      controller: controller..text = formatted ?? '',
+      readOnly: true,
+      onSaved: (value) {
+        widget.onChanged(value ?? '');
+        setState(() {});
+      },
+      onTap: () async {
+        final date = await showDatePicker(
+          context: context,
+          initialDate: DateTime.now(),
+          firstDate: DateTime(1900),
+          lastDate: DateTime.now(),
+        );
+
+        if (date != null) {
+          widget.onChanged(date.toString());
+          setState(() {});
+        }
+      },
+      decoration: InputDecoration(
+        //labelText: label,
+
+        isDense: true,
+        errorText: widget.errorText,
+        errorStyle: GoogleFonts.inter(
+          color: Colors.red,
+        ),
+        fillColor: HexColor('#F9F9F9'),
+        hintText: 'DD/MM/YYYY',
+        hintStyle: GoogleFonts.inter(
+          fontSize: 16,
+          color: HexColor('#B3B3B3'),
+        ),
+        filled: true,
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(5),
+          borderSide: BorderSide.none,
+        ),
+        suffixIcon: IconButton(
+          icon: const FaIcon(FontAwesomeIcons.calendarAlt),
+          onPressed: () async {
+            final date = await showDatePicker(
+              context: context,
+              initialDate: DateTime.now(),
+              firstDate: DateTime(1900),
+              lastDate: DateTime.now(),
+            );
+
+            if (date != null) {
+              widget.onChanged(date.toString());
+              setState(() {});
+            }
+          },
+        ),
+      ),
+      onChanged: widget.onChanged,
     );
   }
 }
