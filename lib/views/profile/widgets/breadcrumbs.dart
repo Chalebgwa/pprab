@@ -19,7 +19,7 @@ class ProfileBreadCrumbs extends StatelessWidget {
         'Details Of Employees in Botswana',
         'Vehicles and Equipment',
         'Details of Projects',
-        'Details of Company'
+        'Details of Secretary'
       ];
 
   @override
