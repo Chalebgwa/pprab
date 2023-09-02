@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:pprab/views/dashboard/dashboard.dart';
+import 'package:pprab/forms/contractor_form.dart';
+import 'package:pprab/views/auth/contactor_login.dart';
 import 'package:pprab/widgets/buttons.dart';
 import 'package:pprab/widgets/inputs.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_ui/responsive_ui.dart';
-
-import '../../forms/contractor_form.dart';
 
 class ContractorRegistration extends StatefulWidget {
   const ContractorRegistration({super.key});
@@ -276,7 +274,7 @@ class _ContractorFormViewState extends State<ContractorFormView> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  "You have an account?",
+                  'You have an account?',
                   style: GoogleFonts.inter(
                     fontSize: 16,
                     color: HexColor('#B3B3B3'),
@@ -287,10 +285,15 @@ class _ContractorFormViewState extends State<ContractorFormView> {
                 ),
                 TextButton(
                   onPressed: () {
-                    context.go(Dashboard.routeName);
+                    // context.go(Dashboard.routeName);
+
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const Login()),
+                    );
                   },
                   child: Text(
-                    "Login",
+                    'Login',
                     style: GoogleFonts.inter(
                       fontSize: 16,
                       color: HexColor('#000000'),
