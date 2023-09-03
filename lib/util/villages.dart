@@ -1,4 +1,4 @@
-List<String> places = const [
+List<String> places = [
   'Gaborone',
   'Mahalapye',
   'Francistown',

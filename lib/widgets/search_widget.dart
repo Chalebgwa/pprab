@@ -47,7 +47,7 @@ class SearchWidget extends StatelessWidget {
             Wrap(
               children: [
                 Div(
-                  divison: Division(colL: 8, colM: 8, colS: 12),
+                  divison: const Division(colL: 8, colM: 8, colS: 12),
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: TextFormField(
@@ -60,13 +60,13 @@ class SearchWidget extends StatelessWidget {
                         ),
                         labelText: 'Search',
                         hintText: 'Search',
-                        prefixIcon: Icon(Icons.search),
+                        prefixIcon: const Icon(Icons.search),
                       ),
                     ),
                   ),
                 ),
                 Div(
-                  divison: Division(colL: 4, colM: 4, colS: 12),
+                  divison: const Division(colL: 4, colM: 4, colS: 12),
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: FillButton(

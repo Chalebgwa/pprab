@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:pprab/util/dimensions.dart';
+import 'package:pprab/widgets/buttons.dart';
+import 'package:pprab/widgets/search_form.dart';
+import 'package:responsive_ui/responsive_ui.dart';
 
 class HeroSection extends StatelessWidget {
   const HeroSection({super.key});
@@ -48,24 +52,37 @@ class HeroSection extends StatelessWidget {
           const SizedBox(
             height: 36,
           ),
-          ElevatedButton(
-            onPressed: () {},
-            style: ElevatedButton.styleFrom(
-              fixedSize: const Size(195, 50),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(
+                width: 356,
+                child: Card(
+                  child: ListTile(
+                    onTap: () {
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return const SearchForm();
+                        },
+                      );
+                    },
+                    trailing: const Icon(
+                      FontAwesomeIcons.magnifyingGlass,
+                    ),
+                    title: Text(
+                      'SEARCH REGISTERED CONTRACTOR',
+                      style: GoogleFonts.inter(
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
               ),
-            ),
-            child: Text(
-              'GET STARTED NOW',
-              style: TextStyle(
-                color: HexColor('#223160'),
-                fontSize: 14,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
+            ],
           ),
-          Spacer(),
+          const Spacer(),
 
           // text at the left bottom corner 'Do you need help? Click Here'
           Padding(
@@ -94,6 +111,52 @@ class HeroSection extends StatelessWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget searchBar(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.all(isDesktop(context) ? 200 : 40),
+      child: Material(
+        child: Column(
+          children: [
+            // outlined text field
+            Wrap(
+              children: [
+                Div(
+                  divison: Division(colL: 8, colM: 8, colS: 12),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: TextFormField(
+                      decoration: InputDecoration(
+                        fillColor: HexColor('#E0E0E0'),
+                        filled: true,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          borderSide: BorderSide.none,
+                        ),
+                        labelText: 'Search',
+                        hintText: 'Search',
+                        prefixIcon: Icon(Icons.search),
+                      ),
+                    ),
+                  ),
+                ),
+                Div(
+                  divison: Division(colL: 4, colM: 4, colS: 12),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: FillButton(
+                      onPressed: () {},
+                      text: 'Search',
+                    ),
+                  ),
+                )
+              ],
+            )
+          ],
+        ),
       ),
     );
   }

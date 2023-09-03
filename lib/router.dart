@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:pprab/controllers/dashboard_controller.dart';
 import 'package:pprab/views/dashboard/dashboard.dart';
 import 'package:pprab/views/auth/contractor_registration.dart';
 import 'package:pprab/views/home.dart';
-import 'package:provider/provider.dart';
-
-import 'forms/contractor_form.dart';
 
 final router = GoRouter(
   initialLocation: HomeScreen.routeName,
