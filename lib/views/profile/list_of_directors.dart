@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
+import 'package:pprab/controllers/auth_controller.dart';
+import 'package:pprab/controllers/dashboard_controller.dart';
+import 'package:pprab/models/business_model.dart';
 import 'package:pprab/views/profile/forms/bank_details_form.dart';
 import 'package:pprab/views/profile/forms/list_of_directors.dart';
 import 'package:pprab/views/profile/widgets/label.dart';
@@ -19,17 +22,19 @@ class ListOfDirectors extends StatefulWidget {
 
 class _ListOfDirectorsState extends State<ListOfDirectors> {
   late ListOfDirectorsForm form;
+  late DashboardController controller;
 
   @override
   void didChangeDependencies() {
     form = context.read<ListOfDirectorsForm>();
+    controller = context.read<DashboardController>();
     super.didChangeDependencies();
   }
 
   @override
   Widget build(BuildContext context) {
     final format = DateFormat('dd/MM/yyyy');
-
+    final auth = context.watch<Auth>();
     return Padding(
       padding: const EdgeInsets.all(34.0),
       child: Wrap(
@@ -39,6 +44,14 @@ class _ListOfDirectorsState extends State<ListOfDirectors> {
             icon: FontAwesomeIcons.creditCard,
           ),
           ResponsiveTable(
+            onRemove: () {
+              form.removeRow(1);
+              setState(() {});
+            },
+            onAdd: () {
+              form.addRow();
+              setState(() {});
+            },
             headers: const [
               'First Name',
               'Middle Name',
@@ -137,7 +150,39 @@ class _ListOfDirectorsState extends State<ListOfDirectors> {
               padding: const EdgeInsets.only(top: 120),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
-                children: [FillButton(onPressed: () {}, text: 'Done')],
+                children: [
+                  FillButton(
+                      onPressed: () {
+                        final selectedBusiness = auth.selectedBusines;
+
+                        if (form.isValid) {
+                          final newBusiness = selectedBusiness?.copyWith(
+                                directorsList: form.toModel(),
+                              ) ??
+                              BusinessModel(
+                                directorsList: form.toModel(),
+                              );
+
+                          auth.updateBusinessModel(newBusiness);
+
+                          controller.setSelectedBreadcrumbIndex(6);
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              backgroundColor: Colors.green,
+                              content: Text('List of Directors saved'),
+                            ),
+                          );
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              backgroundColor: Colors.red,
+                              content: Text('Please fill all the fields'),
+                            ),
+                          );
+                        }
+                      },
+                      text: 'Done')
+                ],
               ),
             ),
           )

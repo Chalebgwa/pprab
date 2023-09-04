@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
+import 'package:pprab/controllers/dashboard_controller.dart';
 import 'package:pprab/views/profile/forms/bank_details_form.dart';
 import 'package:pprab/views/profile/forms/employee_details_form.dart';
 import 'package:pprab/views/profile/forms/list_of_Shareholders.dart';
@@ -81,6 +82,14 @@ class _DetailsOfEmployeesState extends State<DetailsOfEmployees> {
             ),
           ),
           ResponsiveTable(
+            onAdd: () {
+              form.addRow();
+              setState(() {});
+            },
+            onRemove: () {
+              form.removeRow(0);
+              setState(() {});
+            },
             headers: const [
               'First Name',
               'Middle Name',
@@ -179,7 +188,27 @@ class _DetailsOfEmployeesState extends State<DetailsOfEmployees> {
               padding: const EdgeInsets.only(top: 120),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
-                children: [FillButton(onPressed: () {}, text: 'Done')],
+                children: [
+                  FillButton(
+                      onPressed: () {
+                        if (form.isValid) {
+                          context
+                              .read<DashboardController>()
+                              .setSelectedBreadcrumbIndex(8);
+                          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                              backgroundColor: Colors.green,
+                              content: Text(
+                                  'Details of Employees in Botswana saved successfully')));
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                  backgroundColor: Colors.red,
+                                  content: Text(
+                                      'Please fill all the required fields')));
+                        }
+                      },
+                      text: 'Done')
+                ],
               ),
             ),
           )

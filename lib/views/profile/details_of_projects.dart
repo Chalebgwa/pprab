@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pprab/controllers/dashboard_controller.dart';
 import 'package:pprab/views/profile/forms/vehicles_and_equipment_form.dart';
 import 'package:pprab/widgets/buttons.dart';
 import 'package:pprab/widgets/inputs.dart';
@@ -33,6 +34,14 @@ class _DetailsOfProjectsState extends State<DetailsOfProjects> {
         spacing: 145,
         children: [
           ResponsiveTable(
+            onAdd: () {
+              form.addRow();
+              setState(() {});
+            },
+            onRemove: () {
+              form.removeRow(0);
+              setState(() {});
+            },
             title: 'Vehicles',
             headers: const [
               'Registered Owner',
@@ -112,7 +121,25 @@ class _DetailsOfProjectsState extends State<DetailsOfProjects> {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 FillButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    if (form.isValid) {
+                      context
+                          .read<DashboardController>()
+                          .setSelectedBreadcrumbIndex(10);
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          backgroundColor: Colors.green,
+                          content: Text('Form Submitted'),
+                        ),
+                      );
+                    } else
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          backgroundColor: Colors.red,
+                          content: Text('Please fill all the fields'),
+                        ),
+                      );
+                  },
                   text: 'Done',
                 )
               ],

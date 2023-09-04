@@ -1,5 +1,8 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:pprab/forms/validator.dart';
+import 'package:pprab/views/profile/profile.dart';
 
 class DetailsOfSecretaryForm extends ChangeNotifier {
   Validator fullName = Validator(null, null);
@@ -9,6 +12,14 @@ class DetailsOfSecretaryForm extends ChangeNotifier {
   Validator businessPhone = Validator(null, null);
   Validator mobilePhone = Validator(null, null);
   Validator email = Validator(null, null);
+
+  ProfileStatus get status {
+    if (isValid) {
+      return ProfileStatus.complete;
+    } else {
+      return ProfileStatus.incomplete;
+    }
+  }
 
   void validateFullName(String value) {
     if (value.isEmpty) {
@@ -21,54 +32,54 @@ class DetailsOfSecretaryForm extends ChangeNotifier {
 
   void validateNationality(String value) {
     if (value.isEmpty) {
-      fullName = Validator(null, 'Nationality is required');
+      nationality = Validator(null, 'Nationality is required');
     } else {
-      fullName = Validator(value, null);
+      nationality = Validator(value, null);
     }
     notifyListeners();
   }
 
   void validatePassportNumber(String value) {
     if (value.isEmpty) {
-      fullName = Validator(null, 'Passport number is required');
+      passportNumber = Validator(null, 'Passport number is required');
     } else {
-      fullName = Validator(value, null);
+      passportNumber = Validator(value, null);
     }
     notifyListeners();
   }
 
   void validateHomePhone(String value) {
     if (value.isEmpty) {
-      fullName = Validator(null, 'Home phone is required');
+      homePhone = Validator(null, 'Home phone is required');
     } else {
-      fullName = Validator(value, null);
+      homePhone = Validator(value, null);
     }
     notifyListeners();
   }
 
   void validateBusinessPhone(String value) {
     if (value.isEmpty) {
-      fullName = Validator(null, 'Business phone is required');
+      businessPhone = Validator(null, 'Business phone is required');
     } else {
-      fullName = Validator(value, null);
+      businessPhone = Validator(value, null);
     }
     notifyListeners();
   }
 
   void validateMobilePhone(String value) {
     if (value.isEmpty) {
-      fullName = Validator(null, 'Mobile phone is required');
+      mobilePhone = Validator(null, 'Mobile phone is required');
     } else {
-      fullName = Validator(value, null);
+      mobilePhone = Validator(value, null);
     }
     notifyListeners();
   }
 
   void validateEmail(String value) {
     if (value.isEmpty) {
-      fullName = Validator(null, 'Email is required');
+      email = Validator(null, 'Email is required');
     } else {
-      fullName = Validator(value, null);
+      email = Validator(value, null);
     }
     notifyListeners();
   }

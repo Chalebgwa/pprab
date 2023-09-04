@@ -1,9 +1,12 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'dart:html';
 import 'dart:js_interop';
+import 'dart:typed_data';
 import 'package:http/http.dart' as http;
 
 import 'package:flutter/material.dart';
+import 'package:localstorage/localstorage.dart';
 import 'package:pprab/forms/validator.dart';
 import 'package:pprab/models/client_model.dart';
 
@@ -16,6 +19,8 @@ class ContractorForm extends ChangeNotifier {
   Validator password = Validator(null, null);
   Validator confirmPassword = Validator(null, null);
   Validator phoneNumber = Validator(null, null);
+  Validator secretaryDirector = Validator(null, null);
+  FileValidator omangFile = FileValidator(null, null);
 
   // business information
   Validator businessName = Validator(null, null);
@@ -33,6 +38,24 @@ class ContractorForm extends ChangeNotifier {
   Validator omang = Validator(null, null);
 
   Validator dateOfBusinessRegistration = Validator(null, null);
+
+  void validateSecretaryDirector(String value) {
+    if (value.isEmpty) {
+      secretaryDirector = Validator(null, 'Secretary/Director is required');
+    } else {
+      secretaryDirector = Validator(value, null);
+    }
+    notifyListeners();
+  }
+
+  void validateOmangFile(Uint8List? value) {
+    if (value == null) {
+      omangFile = FileValidator(null, 'Omang is required');
+    } else {
+      omangFile = FileValidator(value, null);
+    }
+    notifyListeners();
+  }
 
   void validateDor(String dor) {
     final date = DateTime.tryParse(dor);
@@ -151,8 +174,11 @@ class ContractorForm extends ChangeNotifier {
   // cipa number validator
 
   void validateCipaNumber(String value) {
-    if (value.isEmpty) {
-      cipaNumber = Validator(null, 'Cipa number is required');
+    // cipa number must be 9 digit number
+    final cipaNumberRegex = RegExp(r'^\d{9}$');
+
+    if (!cipaNumberRegex.hasMatch(value)) {
+      cipaNumber = Validator(null, 'Invalid cipa number');
     } else {
       cipaNumber = Validator(value, null);
     }
@@ -183,11 +209,11 @@ class ContractorForm extends ChangeNotifier {
         password.isValid &&
         confirmPassword.isValid &&
         phoneNumber.isValid &&
-        // businessName.isValid &&
-        //businessType.isValid &&
-        // areYourRegisterdWithCipa.isValid &&
-        // cipaNumber.isValid &&
-        omang.isValid;
+        areYourRegisterdWithCipa.isValid &&
+        secretaryDirector.isValid &&
+        omangFile.isValid &&
+        omang.isValid &&
+        (areYourRegisterdWithCipa.value == 'No' || cipaNumber.isValid);
   }
 
   // reset the form
@@ -198,11 +224,13 @@ class ContractorForm extends ChangeNotifier {
     password = Validator(null, null);
     confirmPassword = Validator(null, null);
     phoneNumber = Validator(null, null);
-    // businessName = Validator(null, null);
-    //businessType = Validator(null, null);
-    // areYourRegisterdWithCipa = Validator(null, null);
-    //cipaNumber = Validator(null, null);
+    businessName = Validator(null, null);
+    businessType = Validator(null, null);
+    areYourRegisterdWithCipa = Validator(null, null);
+    cipaNumber = Validator(null, null);
     omang = Validator(null, null);
+    secretaryDirector = Validator(null, null);
+    omangFile = FileValidator(null, null);
     notifyListeners();
   }
 
@@ -224,20 +252,28 @@ class ContractorForm extends ChangeNotifier {
         'confirmPassword': confirmPassword.value,
         'phoneNumber': phoneNumber.value,
         'omang': omang.value,
+        'secretaryDirector': secretaryDirector.value,
+        'businessName': businessName.value,
+        'businessType': businessType.value,
+        'areYouRegisteredWithCipa': areYourRegisterdWithCipa.value,
+        'cipaNumber': cipaNumber.value,
       };
 
   Future<bool> postUsers() async {
     try {
-      final url = Uri.parse(ApiConstants.signUp);
-      final response = await http.post(
-        url,
-        headers: {'Content-Type': 'application/json'},
-        body: jsonEncode(toJson()),
-      );
+      // final url = Uri.parse(ApiConstants.signUp);
+      // final response = await http.post(
+      //   url,
+      //   headers: {'Content-Type': 'application/json'},
+      //   body: jsonEncode(toJson()),
+      // );
 
-      if (response.statusCode == 201) {
-        return true;
-      }
+      // if (response.statusCode == 201) {
+      //   return true;
+      // }
+
+      window.localStorage['contractor'] = jsonEncode(toJson());
+      return true;
     } catch (e) {
       log(e.toString());
     }

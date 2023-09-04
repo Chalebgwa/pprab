@@ -3,9 +3,12 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:pprab/controllers/auth_controller.dart';
 import 'package:pprab/views/auth/contractor_registration.dart';
 import 'package:pprab/widgets/logo.dart';
+import 'package:pprab/widgets/search_form.dart';
 import 'package:pprab/widgets/search_widget.dart';
+import 'package:provider/provider.dart';
 
 class CustomNavBar extends StatelessWidget {
   const CustomNavBar({super.key});
@@ -23,8 +26,8 @@ class CustomNavBar extends StatelessWidget {
           children: [
             const Logo(),
             const Spacer(),
-            SearchWidget(),
-            SizedBox(
+            const SearchWidget(),
+            const SizedBox(
               width: 20,
             ),
             IconButton(
@@ -40,7 +43,7 @@ class CustomNavBar extends StatelessWidget {
                 color: Colors.white,
               ),
             ),
-            SizedBox(
+            const SizedBox(
               width: 30,
             )
           ],
@@ -107,6 +110,7 @@ class CustomNavBarDashboard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+    final auth = context.watch<Auth>();
 
     if (size.width <= 766) {
       return Container(
@@ -117,8 +121,8 @@ class CustomNavBarDashboard extends StatelessWidget {
           children: [
             const Logo(),
             const Spacer(),
-            SearchWidget(),
-            SizedBox(
+            const SearchWidget(),
+            const SizedBox(
               width: 20,
             ),
             IconButton(
@@ -134,7 +138,7 @@ class CustomNavBarDashboard extends StatelessWidget {
                 color: Colors.white,
               ),
             ),
-            SizedBox(
+            const SizedBox(
               width: 30,
             )
           ],
@@ -146,14 +150,48 @@ class CustomNavBarDashboard extends StatelessWidget {
       color: HexColor('#EFF1F7'),
       height: 80,
       width: double.infinity,
-      child: Row(
-        children: [
-          Expanded(
-            child: Padding(
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Row(
+          children: [
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  auth.currentContractor?.firstName.toUpperCase() ?? '',
+                  style: GoogleFonts.inter(
+                    color: HexColor('#1A1A1A'),
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Text(
+                  auth.currentContractor?.secretaryDirector ?? '',
+                  style: GoogleFonts.inter(
+                    color: HexColor('#1A1A1A'),
+                    fontSize: 11,
+                    fontWeight: FontWeight.normal,
+                  ),
+                ),
+              ],
+            ),
+            Spacer(),
+            Padding(
               padding: const EdgeInsets.all(15.0),
               child: SizedBox(
                 height: 54,
+                width: 162,
                 child: TextField(
+                  readOnly: true,
+                  onTap: () {
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        return const SearchForm();
+                      },
+                    );
+                  },
                   decoration: InputDecoration(
                     fillColor: Colors.white,
                     filled: true,
@@ -179,69 +217,44 @@ class CustomNavBarDashboard extends StatelessWidget {
                 ),
               ),
             ),
-          ),
-          const SizedBox(
-            width: 45,
-          ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              Text(
-                'John Doe',
-                style: GoogleFonts.inter(
-                  color: HexColor('#1A1A1A'),
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
+            const SizedBox(
+              width: 20,
+            ),
+            // black bell with badge
+            Stack(
+              children: [
+                const Icon(
+                  FontAwesomeIcons.solidBell,
+                  color: Colors.black,
                 ),
-              ),
-              Text(
-                'Company rep',
-                style: GoogleFonts.inter(
-                  color: HexColor('#1A1A1A'),
-                  fontSize: 11,
-                  fontWeight: FontWeight.normal,
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(
-            width: 20,
-          ),
-          // black bell with badge
-          Stack(
-            children: [
-              const Icon(
-                FontAwesomeIcons.solidBell,
-                color: Colors.black,
-              ),
-              Positioned(
-                top: 0,
-                right: 0,
-                child: Container(
-                  alignment: Alignment.center,
-                  width: 15,
-                  height: 15,
-                  decoration: BoxDecoration(
-                    color: HexColor('#3D99BE'),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Text(
-                    '2',
-                    style: GoogleFonts.inter(
-                      color: Colors.white,
-                      fontSize: 10,
-                      fontWeight: FontWeight.bold,
+                Positioned(
+                  top: 0,
+                  right: 0,
+                  child: Container(
+                    alignment: Alignment.center,
+                    width: 15,
+                    height: 15,
+                    decoration: BoxDecoration(
+                      color: HexColor('#3D99BE'),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Text(
+                      '2',
+                      style: GoogleFonts.inter(
+                        color: Colors.white,
+                        fontSize: 10,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ],
-          ),
-          const SizedBox(
-            width: 20,
-          ),
-        ],
+              ],
+            ),
+            const SizedBox(
+              width: 20,
+            ),
+          ],
+        ),
       ),
     );
   }

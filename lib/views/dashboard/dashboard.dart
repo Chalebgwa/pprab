@@ -44,13 +44,14 @@ class Dashboard extends StatelessWidget {
         child: Wrap(
           children: [
             const Div(
-                divison: Division(
-                  colL: 2,
-                  colM: 0,
-                  colS: 0,
-                  colXS: 0,
-                ),
-                child: SideBar()),
+              divison: Division(
+                colL: 2,
+                colM: 0,
+                colS: 0,
+                colXS: 0,
+              ),
+              child: SideBar(),
+            ),
             Div(
               divison: const Division(
                 colL: 10,

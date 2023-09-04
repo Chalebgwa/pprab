@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pprab/controllers/auth_controller.dart';
 import 'package:pprab/controllers/dashboard_controller.dart';
 import 'package:pprab/forms/contractor_form.dart';
 import 'package:pprab/views/profile/company_address_details.dart';
@@ -22,6 +23,9 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        ChangeNotifierProvider(
+          create: (_) => Auth(),
+        ),
         ChangeNotifierProvider(
           create: (_) => ContractorForm(),
         ),

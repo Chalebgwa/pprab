@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:pprab/controllers/auth_controller.dart';
+import 'package:pprab/controllers/dashboard_controller.dart';
+import 'package:pprab/models/business_model.dart';
+import 'package:pprab/models/company_address_model.dart';
 import 'package:pprab/util/dimensions.dart';
 import 'package:pprab/util/districts.dart';
 import 'package:pprab/util/villages.dart';
@@ -18,6 +22,8 @@ class CompanyAddressDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final form = context.watch<CompanyAddressDetailsForm>();
+    final auth = context.watch<Auth>();
+    final dashBoard = context.watch<DashboardController>();
     return Padding(
       padding: const EdgeInsets.all(46),
       child: Wrap(
@@ -103,7 +109,30 @@ class CompanyAddressDetails extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 FillButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    if (form.isValid) {
+                      final businessModel = auth.selectedBusines;
+
+                      final newBusinessModel = businessModel?.copyWith(
+                            companyAddressModel: form.toModel(),
+                          ) ??
+                          BusinessModel(
+                            companyAddressModel: form.toModel(),
+                          );
+
+                      // replace the old business model with the new one
+                      if (newBusinessModel != null) {
+                        auth.updateBusinessModel(newBusinessModel);
+                        dashBoard.setSelectedBreadcrumbIndex(3);
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            backgroundColor: Colors.green,
+                            content: Text('Company Address Details Saved'),
+                          ),
+                        );
+                      }
+                    }
+                  },
                   text: 'Done',
                 )
               ],

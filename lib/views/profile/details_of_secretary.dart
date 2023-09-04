@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:pprab/controllers/dashboard_controller.dart';
 import 'package:pprab/util/dimensions.dart';
 import 'package:pprab/util/districts.dart';
 import 'package:pprab/util/villages.dart';
@@ -130,7 +131,25 @@ class DetailsOfSecretary extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 FillButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    if (form.isValid) {
+                      context
+                          .read<DashboardController>()
+                          .setSelectedBreadcrumbIndex(0);
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          backgroundColor: Colors.green,
+                          content: Text('Form Submitted'),
+                        ),
+                      );
+                    } else
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          backgroundColor: Colors.red,
+                          content: Text('Please fill all the fields'),
+                        ),
+                      );
+                  },
                   text: 'Done',
                 )
               ],

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pprab/forms/validator.dart';
+import 'package:pprab/models/directors_model.dart';
+import 'package:pprab/views/profile/profile.dart';
 
 class ListOfDirectorsForm extends ChangeNotifier {
   ListOfDirectorsForm() {
@@ -27,6 +29,39 @@ class ListOfDirectorsForm extends ChangeNotifier {
     return {
       'data': rows.map((row) => row.value).toList(),
     };
+  }
+
+  // to model
+  DirectorsList toModel() {
+    return DirectorsList(
+      directors: rows.map((row) => Director.fromJson(row.value)).toList(),
+    );
+  }
+
+  // from json
+  void setValue(Map<String, dynamic> value) {
+    final data = value['data'] as List<dynamic>;
+    rows = data
+        .map(
+          (row) => DirectorRow(notifyListeners)
+            ..firstName = Validator(row['firstName'] as String, null)
+            ..middleName = Validator(row['middleName'] as String, null)
+            ..lastName = Validator(row['lastName'] as String, null)
+            ..gender = Validator(row['gender'] as String, null)
+            ..dob = Validator(row['dob'] as String, null),
+        )
+        .toList();
+    notifyListeners();
+  }
+
+  ProfileStatus get status {
+    if (isValid) {
+      return ProfileStatus.complete;
+    } else if (rows.isEmpty) {
+      return ProfileStatus.incomplete;
+    } else {
+      return ProfileStatus.inprogress;
+    }
   }
 }
 
@@ -76,6 +111,7 @@ class DirectorRow {
     } else {
       gender = Validator(value, null);
     }
+    notifyListeners();
   }
 
   void validateDob(String value) {
@@ -84,6 +120,7 @@ class DirectorRow {
     } else {
       dob = Validator(value, null);
     }
+    notifyListeners();
   }
 
   Map<String, dynamic> get value => {

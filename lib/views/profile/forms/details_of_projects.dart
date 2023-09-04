@@ -1,11 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:pprab/forms/validator.dart';
+import 'package:pprab/views/profile/profile.dart';
 
 class DetailsOfProjectsForm extends ChangeNotifier {
   DetailsOfProjectsForm() {
     rows.add(RowOfProject(notifyListeners));
   }
   List<RowOfProject> rows = [];
+
+  ProfileStatus get status {
+    if (isValid) {
+      return ProfileStatus.complete;
+    } else if (rows.any((row) => row.isValid)) {
+      return ProfileStatus.inprogress;
+    } else {
+      return ProfileStatus.incomplete;
+    }
+  }
 
   void addRow() {
     rows.add(RowOfProject(notifyListeners));

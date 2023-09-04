@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pprab/forms/validator.dart';
+import 'package:pprab/views/profile/profile.dart';
 
 class ListOfshareHoldersForm extends ChangeNotifier {
   ListOfshareHoldersForm() {
@@ -27,6 +28,16 @@ class ListOfshareHoldersForm extends ChangeNotifier {
     return {
       'data': rows.map((row) => row.value).toList(),
     };
+  }
+
+  ProfileStatus get status {
+    if (isValid) {
+      return ProfileStatus.complete;
+    } else if (rows.any((row) => row.isValid)) {
+      return ProfileStatus.inprogress;
+    } else {
+      return ProfileStatus.incomplete;
+    }
   }
 }
 

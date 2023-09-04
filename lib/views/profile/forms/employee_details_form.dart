@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pprab/forms/validator.dart';
+import 'package:pprab/views/profile/profile.dart';
 
 class ListOfEmployeesForm extends ChangeNotifier {
   ListOfEmployeesForm() {
@@ -11,6 +12,16 @@ class ListOfEmployeesForm extends ChangeNotifier {
   Validator totalNumberOfEmployees = Validator(null, null);
 
   List<EmployeeRow> rows = [];
+
+  ProfileStatus get status {
+    if (isValid) {
+      return ProfileStatus.complete;
+    } else if (rows.any((row) => row.isValid)) {
+      return ProfileStatus.inprogress;
+    } else {
+      return ProfileStatus.incomplete;
+    }
+  }
 
   void changeTotalNumberOfBotsswanaEmployees(String value) {
     if (value.isEmpty) {

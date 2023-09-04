@@ -8,6 +8,16 @@ import 'package:pprab/views/profile/contact_details.dart';
 import 'package:pprab/views/profile/details_of_employees.dart';
 import 'package:pprab/views/profile/details_of_projects.dart';
 import 'package:pprab/views/profile/details_of_secretary.dart';
+import 'package:pprab/views/profile/forms/bank_details_form.dart';
+import 'package:pprab/views/profile/forms/company_address_details_form.dart';
+import 'package:pprab/views/profile/forms/company_details_form.dart';
+import 'package:pprab/views/profile/forms/details_of_projects.dart';
+import 'package:pprab/views/profile/forms/details_of_secretary.dart';
+import 'package:pprab/views/profile/forms/employee_details_form.dart';
+import 'package:pprab/views/profile/forms/list_of_Shareholders.dart';
+import 'package:pprab/views/profile/forms/list_of_directors.dart';
+import 'package:pprab/views/profile/forms/primary_contact_form.dart';
+import 'package:pprab/views/profile/forms/vehicles_and_equipment_form.dart';
 import 'package:pprab/views/profile/list_of_directors.dart';
 import 'package:pprab/views/profile/list_of_shareholders.dart';
 import 'package:pprab/views/profile/profile_company_details.dart';
@@ -24,8 +34,25 @@ enum ProfileStatus {
   complete,
 }
 
-class Profile extends StatelessWidget {
+class Profile extends StatefulWidget {
   const Profile({super.key});
+
+  @override
+  State<Profile> createState() => _ProfileState();
+}
+
+class _ProfileState extends State<Profile> {
+  late CompanyDetailsForm companyDetailsForm;
+  late CompanyAddressDetailsForm companyAddressDetailsForm;
+  late PrimaryContactForm primaryContactForm;
+
+  @override
+  void didChangeDependencies() {
+    companyDetailsForm = context.watch<CompanyDetailsForm>();
+    companyAddressDetailsForm = context.watch<CompanyAddressDetailsForm>();
+    primaryContactForm = context.watch<PrimaryContactForm>();
+    super.didChangeDependencies();
+  }
 
   Widget getPage(int page) {
     switch (page) {
@@ -66,6 +93,7 @@ class Profile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final page = context.watch<DashboardController>().selectedBreadcrumbIndex;
+
     return Column(
       children: [
         if (page != 0) ProfileBreadCrumbs(),
@@ -75,74 +103,83 @@ class Profile extends StatelessWidget {
   }
 
   Wrap _profileLandingPage() {
-    return const Wrap(
+    return Wrap(
       children: [
         ProfileContent(
-          status: ProfileStatus.complete,
+          status: companyDetailsForm.status,
           title: 'Company Details',
           icon: FontAwesomeIcons.store,
           page: 1,
         ),
         ProfileContent(
-          status: ProfileStatus.inprogress,
+          status: companyAddressDetailsForm.status,
           title: 'Company Address Details',
           icon: FontAwesomeIcons.locationDot,
           page: 2,
         ),
         ProfileContent(
-          status: ProfileStatus.incomplete,
+          status: primaryContactForm.status,
           title: 'Primary & Secondary Contact',
           icon: FontAwesomeIcons.phone,
           page: 3,
         ),
         ProfileContent(
-          status: ProfileStatus.incomplete,
+          status: context.watch<BankDetailsForm>().status,
           title: 'Details of Banker',
           icon: FontAwesomeIcons.creditCard,
           page: 4,
         ),
+        // const ProfileContent(
+        //   status: ProfileStatus.incomplete,
+        //   title: 'Details of Affliates',
+        //   icon: FontAwesomeIcons.userPlus,
+        //   page: 5,
+        // ),
         ProfileContent(
-          status: ProfileStatus.incomplete,
-          title: 'Details of Affliates',
-          icon: FontAwesomeIcons.userPlus,
+          status: context.watch<ListOfDirectorsForm>().status,
+          title: 'List of Directors',
+          icon: FontAwesomeIcons.listCheck,
           page: 5,
         ),
+
         ProfileContent(
-          status: ProfileStatus.incomplete,
-          title: 'List of Directors',
+          status: context.watch<ListOfshareHoldersForm>().rows.isNotEmpty
+              ? ProfileStatus.complete
+              : ProfileStatus.incomplete,
+          title: 'List of Shareholders',
           icon: FontAwesomeIcons.listCheck,
           page: 6,
         ),
         ProfileContent(
-          status: ProfileStatus.incomplete,
+          status: context.watch<ListOfEmployeesForm>().status,
           title: 'Details of Employess in Botswana',
           icon: FontAwesomeIcons.list,
           page: 7,
         ),
         ProfileContent(
-          status: ProfileStatus.incomplete,
+          status: context.watch<VehiclesAndEquipmentForm>().status,
           title: 'Vehicles & Equipment',
           icon: FontAwesomeIcons.truckMoving,
           page: 8,
         ),
         ProfileContent(
-          status: ProfileStatus.incomplete,
+          status: context.watch<DetailsOfProjectsForm>().status,
           title: 'Details of Projects',
           icon: FontAwesomeIcons.listCheck,
           page: 9,
         ),
         ProfileContent(
-          status: ProfileStatus.incomplete,
-          title: 'Details of Company',
+          status: context.watch<DetailsOfSecretaryForm>().status,
+          title: 'Details of Secretary',
           icon: FontAwesomeIcons.listCheck,
           page: 10,
         ),
-        ProfileContent(
-          status: ProfileStatus.incomplete,
-          title: 'Upload Supporting Document',
-          icon: FontAwesomeIcons.upload,
-          page: 11,
-        ),
+        // const ProfileContent(
+        //   status: ProfileStatus.incomplete,
+        //   title: 'Upload Supporting Document',
+        //   icon: FontAwesomeIcons.upload,
+        //   page: 11,
+        // ),
       ],
     );
   }

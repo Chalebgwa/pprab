@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:pprab/controllers/auth_controller.dart';
+import 'package:pprab/controllers/dashboard_controller.dart';
+import 'package:pprab/models/contact_details_model.dart';
 import 'package:pprab/util/dimensions.dart';
 import 'package:pprab/util/districts.dart';
 import 'package:pprab/util/villages.dart';
@@ -17,6 +20,8 @@ class ContactDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final form = context.watch<PrimaryContactForm>();
+    final auth = context.watch<Auth>();
+    final dashboard = context.watch<DashboardController>();
     return Padding(
       padding: const EdgeInsets.all(46),
       child: Wrap(
@@ -437,7 +442,26 @@ class ContactDetails extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 FillButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    if (form.isValid) {
+                      final business = auth.selectedBusines;
+
+                      final newBusiness = business?.copyWith(
+                        contactInfoModel: ContactInfoModel.fromJson(
+                          form.toJson(),
+                        ),
+                      );
+
+                      auth.updateBusinessModel(newBusiness!);
+                      dashboard.setSelectedBreadcrumbIndex(4);
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          backgroundColor: Colors.green,
+                          content: Text('Contact details saved'),
+                        ),
+                      );
+                    }
+                  },
                   text: 'Done',
                 )
               ],

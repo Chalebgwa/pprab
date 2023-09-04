@@ -30,6 +30,12 @@ class CustomFilePicker extends StatelessWidget {
         FontAwesomeIcons.paperclip,
         color: Colors.black,
       ),
+      trailing: value == null
+          ? const Icon(Icons.check_circle)
+          : const Icon(
+              Icons.check_circle,
+              color: Colors.green,
+            ),
       title: Text(
         value != null ? 'Attached' : 'Attach File',
         style: const TextStyle(
@@ -267,6 +273,119 @@ class CustomDropdown extends StatelessWidget {
             },
           ),
         )
+      ],
+    );
+  }
+}
+
+class CIPAInput extends StatefulWidget {
+  const CIPAInput({
+    this.obscureText = false,
+    super.key,
+    this.label,
+    this.placeholder,
+    this.errorText,
+    this.onChanged,
+    this.value,
+    this.isCell = false,
+  });
+
+  final String? label;
+  final String? placeholder;
+  final String? errorText;
+  final bool obscureText;
+  final void Function(String)? onChanged;
+  final String? value;
+  final bool isCell;
+
+  @override
+  State<CIPAInput> createState() => _CIPAInputState();
+}
+
+class _CIPAInputState extends State<CIPAInput> {
+  bool showText = true;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          widget.label ?? "",
+          style: GoogleFonts.inter(
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+            color: Colors.black,
+          ),
+        ),
+        const SizedBox(
+          height: 14,
+        ),
+        TextFormField(
+          initialValue: widget.value,
+          onSaved: (value) {
+            widget.onChanged?.call(value ?? '');
+          },
+          decoration: InputDecoration(
+            //labelText: label,
+            prefixIcon: Padding(
+              padding: const EdgeInsets.all(4.0),
+              child: SizedBox(
+                width: 50,
+                child: Row(
+                  children: [
+                    Text(
+                      "BW",
+                      style: GoogleFonts.inter(
+                        fontSize: 16,
+                        color: HexColor('#000000'),
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 8,
+                    ),
+                    Container(
+                      width: 2,
+                      height: 20,
+                      color: HexColor('#000000'),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            isDense: true,
+            errorText: widget.errorText,
+            errorStyle: GoogleFonts.inter(
+              color: Colors.red,
+            ),
+            fillColor: HexColor('#F9F9F9'),
+            hintText: widget.placeholder,
+            hintStyle: GoogleFonts.inter(
+              fontSize: 16,
+              color: HexColor('#B3B3B3'),
+            ),
+            filled: true,
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(5),
+              borderSide: BorderSide.none,
+            ),
+            suffixIcon: widget.obscureText
+                ? IconButton(
+                    icon: FaIcon(showText
+                        ? FontAwesomeIcons.eye
+                        : FontAwesomeIcons.eyeSlash),
+                    onPressed: () {
+                      setState(() {
+                        showText = !showText;
+                      });
+                    },
+                  )
+                : null,
+          ),
+          obscureText: widget.obscureText && showText,
+          onChanged: widget.onChanged,
+        ),
       ],
     );
   }

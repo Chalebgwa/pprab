@@ -2,6 +2,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:pprab/forms/validator.dart';
+import 'package:pprab/views/profile/profile.dart';
 
 class VehiclesAndEquipmentForm extends ChangeNotifier {
   Validator valueOfTotalCurrentAssets = Validator(null, null);
@@ -19,6 +20,19 @@ class VehiclesAndEquipmentForm extends ChangeNotifier {
   List<PlantAndEquipment> plantAndEquipment = [];
   List<BuildingAndProperty> buildingAndProperty = [];
   List<OfficeEquipment> officeEquipment = [];
+
+  ProfileStatus get status {
+    if (isValid) {
+      return ProfileStatus.complete;
+    } else if (vehicles.any((row) => row.isValid) ||
+        plantAndEquipment.any((row) => row.isValid) ||
+        buildingAndProperty.any((row) => row.isValid) ||
+        officeEquipment.any((row) => row.isValid)) {
+      return ProfileStatus.inprogress;
+    } else {
+      return ProfileStatus.incomplete;
+    }
+  }
 
   void addVehicles() {
     vehicles.add(Vehicles(notifyListeners));

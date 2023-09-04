@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pprab/controllers/dashboard_controller.dart';
 import 'package:pprab/views/profile/forms/vehicles_and_equipment_form.dart';
 import 'package:pprab/widgets/buttons.dart';
 import 'package:pprab/widgets/inputs.dart';
@@ -85,6 +86,14 @@ class _VehiclesAndEquipmentViewState extends State<VehiclesAndEquipmentView> {
             ),
           ),
           ResponsiveTable(
+            onAdd: () {
+              form.addVehicles();
+              setState(() {});
+            },
+            onRemove: () {
+              form.removeVehicles(0);
+              setState(() {});
+            },
             title: 'Vehicles',
             headers: const [
               'Registered Owner',
@@ -155,6 +164,14 @@ class _VehiclesAndEquipmentViewState extends State<VehiclesAndEquipmentView> {
             ],
           ),
           ResponsiveTable(
+            onAdd: () {
+              form.addPlantAndEquipment();
+              setState(() {});
+            },
+            onRemove: () {
+              form.removePlantAndEquipment(0);
+              setState(() {});
+            },
             title: 'Plant and Equipment',
             headers: const [
               'Registered Owner',
@@ -225,6 +242,14 @@ class _VehiclesAndEquipmentViewState extends State<VehiclesAndEquipmentView> {
             ],
           ),
           ResponsiveTable(
+            onAdd: () {
+              form.addBuildingAndProperty();
+              setState(() {});
+            },
+            onRemove: () {
+              form.removeBuildingAndProperty(0);
+              setState(() {});
+            },
             title: 'Plant and Equipment',
             headers: const [
               'Registered Owner',
@@ -295,6 +320,14 @@ class _VehiclesAndEquipmentViewState extends State<VehiclesAndEquipmentView> {
             ],
           ),
           ResponsiveTable(
+            onAdd: () {
+              form.addBuildingAndProperty();
+              setState(() {});
+            },
+            onRemove: () {
+              form.removeBuildingAndProperty(0);
+              setState(() {});
+            },
             title: 'Building and Property',
             headers: const [
               'Ownership',
@@ -362,6 +395,14 @@ class _VehiclesAndEquipmentViewState extends State<VehiclesAndEquipmentView> {
             ],
           ),
           ResponsiveTable(
+            onAdd: () {
+              form.addOfficeEquipment();
+              setState(() {});
+            },
+            onRemove: () {
+              form.removeOfficeEquipment(0);
+              setState(() {});
+            },
             title: 'Office Equipment',
             headers: const [
               'Office Equipment',
@@ -447,7 +488,26 @@ class _VehiclesAndEquipmentViewState extends State<VehiclesAndEquipmentView> {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 FillButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    if (form.isValid) {
+                      context
+                          .read<DashboardController>()
+                          .setSelectedBreadcrumbIndex(9);
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          backgroundColor: Colors.green,
+                          content: Text('Vehicles and Equipment form saved'),
+                        ),
+                      );
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          backgroundColor: Colors.red,
+                          content: Text('Please fill all required fields'),
+                        ),
+                      );
+                    }
+                  },
                   text: 'Done',
                 )
               ],

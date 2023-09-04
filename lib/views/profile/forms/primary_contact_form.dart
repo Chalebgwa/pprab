@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pprab/forms/validator.dart';
+import 'package:pprab/views/profile/profile.dart';
 
 class PrimaryContactForm extends ChangeNotifier {
   Validator firstName = Validator(null, null);
@@ -68,6 +69,7 @@ class PrimaryContactForm extends ChangeNotifier {
     } else {
       dob = Validator(value, null);
     }
+    notifyListeners();
   }
 
   void validateEmail(String? value) {
@@ -204,6 +206,7 @@ class PrimaryContactForm extends ChangeNotifier {
     } else {
       secondaryDob = Validator(value, null);
     }
+    notifyListeners();
   }
 
   void validateSecondaryEmail(String? value) {
@@ -405,5 +408,117 @@ class PrimaryContactForm extends ChangeNotifier {
       'secondaryAddressLine1': secondaryAddressLine1.value,
       'secondaryAddressLine2': secondaryAddressLine2.value,
     };
+  }
+
+  // update from json
+  void updateFromJson(Map<String, dynamic> json) {
+    if (json.isEmpty) {
+      return;
+    }
+
+    firstName = Validator(json['firstName'] as String, null);
+    middleName = Validator(json['middleName'] as String, null);
+    lastName = Validator(json['lastName'] as String, null);
+    dob = Validator(json['dob'] as String, null);
+    email = Validator(json['email'] as String, null);
+    phone = Validator(json['phone'] as String, null);
+    telephone = Validator(json['telephone'] as String, null);
+    businessPhone = Validator(json['businessPhone'] as String, null);
+    country = Validator(json['country'] as String, null);
+    district = Validator(json['district'] as String, null);
+    village = Validator(json['village'] as String, null);
+    pOBox = Validator(json['pOBox'] as String, null);
+    addressNo = Validator(json['addressNo'] as String, null);
+    addressLine1 = Validator(json['addressLine1'] as String, null);
+    addressLine2 = Validator(json['addressLine2'] as String, null);
+    secondaryFirstName = Validator(json['secondaryFirstName'] as String, null);
+    secondaryMiddleName =
+        Validator(json['secondaryMiddleName'] as String, null);
+    secondaryLastName = Validator(json['secondaryLastName'] as String, null);
+    secondaryDob = Validator(json['secondaryDob'] as String, null);
+    secondaryEmail = Validator(json['secondaryEmail'] as String, null);
+    secondaryPhone = Validator(json['secondaryPhone'] as String, null);
+    secondaryTelephone = Validator(json['secondaryTelephone'] as String, null);
+    secondaryBusinessPhone =
+        Validator(json['secondaryBusinessPhone'] as String, null);
+    secondaryCountry = Validator(json['secondaryCountry'] as String, null);
+    secondaryDistrict = Validator(json['secondaryDistrict'] as String, null);
+    secondaryVillage = Validator(json['secondaryVillage'] as String, null);
+    secondaryPOBox = Validator(json['secondaryPOBox'] as String, null);
+    secondaryAddressNo = Validator(json['secondaryAddressNo'] as String, null);
+    secondaryAddressLine1 =
+        Validator(json['secondaryAddressLine1'] as String, null);
+    secondaryAddressLine2 =
+        Validator(json['secondaryAddressLine2'] as String, null);
+
+    notifyListeners();
+  }
+
+  ProfileStatus get status {
+    if (firstName.value != null &&
+        middleName.value != null &&
+        lastName.value != null &&
+        dob.value != null &&
+        email.value != null &&
+        phone.value != null &&
+        telephone.value != null &&
+        businessPhone.value != null &&
+        country.value != null &&
+        district.value != null &&
+        village.value != null &&
+        pOBox.value != null &&
+        addressNo.value != null &&
+        addressLine1.value != null &&
+        addressLine2.value != null &&
+        secondaryFirstName.value != null &&
+        secondaryMiddleName.value != null &&
+        secondaryLastName.value != null &&
+        secondaryDob.value != null &&
+        secondaryEmail.value != null &&
+        secondaryPhone.value != null &&
+        secondaryTelephone.value != null &&
+        secondaryBusinessPhone.value != null &&
+        secondaryCountry.value != null &&
+        secondaryDistrict.value != null &&
+        secondaryVillage.value != null &&
+        secondaryPOBox.value != null &&
+        secondaryAddressNo.value != null &&
+        secondaryAddressLine1.value != null &&
+        secondaryAddressLine2.value != null) {
+      return ProfileStatus.complete;
+    } else if (firstName.value != null ||
+        middleName.value != null ||
+        lastName.value != null ||
+        dob.value != null ||
+        email.value != null ||
+        phone.value != null ||
+        telephone.value != null ||
+        businessPhone.value != null ||
+        country.value != null ||
+        district.value != null ||
+        village.value != null ||
+        pOBox.value != null ||
+        addressNo.value != null ||
+        addressLine1.value != null ||
+        addressLine2.value != null ||
+        secondaryFirstName.value != null ||
+        secondaryMiddleName.value != null ||
+        secondaryLastName.value != null ||
+        secondaryDob.value != null ||
+        secondaryEmail.value != null ||
+        secondaryPhone.value != null ||
+        secondaryTelephone.value != null ||
+        secondaryBusinessPhone.value != null ||
+        secondaryCountry.value != null ||
+        secondaryDistrict.value != null ||
+        secondaryVillage.value != null ||
+        secondaryPOBox.value != null ||
+        secondaryAddressNo.value != null ||
+        secondaryAddressLine1.value != null ||
+        secondaryAddressLine2.value != null) {
+      return ProfileStatus.inprogress;
+    } else {
+      return ProfileStatus.incomplete;
+    }
   }
 }

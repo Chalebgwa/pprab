@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pprab/forms/validator.dart';
+import 'package:pprab/models/bank_details_models.dart';
+import 'package:pprab/views/profile/profile.dart';
 
 class BankDetailsForm extends ChangeNotifier {
   BankDetailsForm() {
@@ -27,6 +29,66 @@ class BankDetailsForm extends ChangeNotifier {
     return {
       'data': rows.map((row) => row.value).toList(),
     };
+  }
+
+  // update from json
+  void update(Map<String, dynamic> json) {
+    if (json.isEmpty) {
+      return;
+    }
+
+    rows = (json['data'] as List<dynamic>)
+        .map((dynamic row) => BankDetailsRow(notifyListeners)
+          ..nameOfBank = Validator(row['nameOfBank'] as String, null)
+          ..branch = Validator(row['branch'] as String, null)
+          ..accountNumber = Validator(row['accountNumber'] as String, null)
+          ..address = Validator(row['address'] as String, null)
+          ..accountType = Validator(row['accountType'] as String, null))
+        .toList();
+    notifyListeners();
+  }
+
+  ProfileStatus get status {
+    // check inprogress
+    if (rows.any((row) => row.nameOfBank.value == null)) {
+      return ProfileStatus.inprogress;
+    }
+    if (rows.any((row) => row.branch.value == null)) {
+      return ProfileStatus.inprogress;
+    }
+    if (rows.any((row) => row.accountNumber.value == null)) {
+      return ProfileStatus.inprogress;
+    }
+    if (rows.any((row) => row.address.value == null)) {
+      return ProfileStatus.inprogress;
+    }
+    if (rows.any((row) => row.accountType.value == null)) {
+      return ProfileStatus.inprogress;
+    }
+
+    // check empty
+    if (rows.any((row) => row.nameOfBank.value?.isEmpty ?? true)) {
+      return ProfileStatus.incomplete;
+    }
+    if (rows.any((row) => row.branch.value?.isEmpty ?? true)) {
+      return ProfileStatus.incomplete;
+    }
+    if (rows.any((row) => row.accountNumber.value?.isEmpty ?? true)) {
+      return ProfileStatus.incomplete;
+    }
+    if (rows.any((row) => row.address.value?.isEmpty ?? true)) {
+      return ProfileStatus.incomplete;
+    }
+    if (rows.any((row) => row.accountType.value?.isEmpty ?? true)) {
+      return ProfileStatus.incomplete;
+    }
+
+    // check complete
+    return ProfileStatus.complete;
+  }
+
+  BankDetails toModel() {
+    return BankDetails(rows: rows.map((e) => e.toModel()).toList());
   }
 }
 
@@ -101,5 +163,15 @@ class BankDetailsRow {
       'address': address.value,
       'accountType': accountType.value,
     };
+  }
+
+  BankRow toModel() {
+    return BankRow(
+      nameOfBank: nameOfBank.value ?? '',
+      branch: branch.value ?? '',
+      accountNumber: accountNumber.value ?? '',
+      address: address.value ?? '',
+      accountType: accountType.value ?? '',
+    );
   }
 }

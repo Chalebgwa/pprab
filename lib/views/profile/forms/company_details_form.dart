@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pprab/forms/validator.dart';
+import 'package:pprab/views/profile/profile.dart';
 
 class CompanyDetailsForm extends ChangeNotifier {
   Validator areYouAlocalProvider = Validator(null, null);
@@ -9,6 +10,16 @@ class CompanyDetailsForm extends ChangeNotifier {
   Validator dateOfRegistration = Validator(null, null);
   Validator ownership = Validator(null, null);
   Validator cipaRegistrationNumber = Validator(null, null);
+  Validator paymentType = Validator(null, null);
+
+  void validatePaymentType(String value) {
+    if (value.isEmpty) {
+      paymentType = Validator(value, 'Please select an option');
+    } else {
+      paymentType = Validator(value, null);
+    }
+    notifyListeners();
+  }
 
   void validateCipaRegistrationNumber(String value) {
     if (value.isEmpty) {
@@ -81,12 +92,13 @@ class CompanyDetailsForm extends ChangeNotifier {
 
   bool get isValid {
     return areYouAlocalProvider.value != null &&
-        businessType.value != null &&
-        businessName.value != null &&
-        areYouRegisteredWithCipa.value != null &&
-        dateOfRegistration.value != null &&
-        cipaRegistrationNumber.value != null &&
-        ownership.value != null;
+            businessType.value != null &&
+            businessName.value != null &&
+            areYouRegisteredWithCipa.value != null &&
+            dateOfRegistration.value != null &&
+            areYouRegisteredWithCipa.value == 'Yes'
+        ? cipaRegistrationNumber.value != null
+        : true && paymentType.value != null && ownership.value != null;
   }
 
   Map<String, dynamic> get data {
@@ -98,6 +110,7 @@ class CompanyDetailsForm extends ChangeNotifier {
       'dateOfRegistration': dateOfRegistration.value,
       'ownership': ownership.value,
       'cipaRegistrationNumber': cipaRegistrationNumber.value,
+      'paymentType': paymentType.value,
     };
   }
 
@@ -109,6 +122,51 @@ class CompanyDetailsForm extends ChangeNotifier {
     dateOfRegistration = Validator(null, null);
     ownership = Validator(null, null);
     cipaRegistrationNumber = Validator(null, null);
+    paymentType = Validator(null, null);
+    notifyListeners();
+  }
+
+  // return ProfileStatus
+  ProfileStatus get status {
+    // check if all fields are filled, or partially filled or not filled at all
+    if (areYouAlocalProvider.value != null &&
+        businessType.value != null &&
+        businessName.value != null &&
+        areYouRegisteredWithCipa.value != null &&
+        dateOfRegistration.value != null &&
+        cipaRegistrationNumber.value != null &&
+        paymentType.value != null &&
+        ownership.value != null) {
+      return ProfileStatus.complete;
+    } else if (areYouAlocalProvider.value != null ||
+        businessType.value != null ||
+        businessName.value != null ||
+        areYouRegisteredWithCipa.value != null ||
+        dateOfRegistration.value != null ||
+        cipaRegistrationNumber.value != null ||
+        paymentType.value != null ||
+        ownership.value != null) {
+      return ProfileStatus.inprogress;
+    } else {
+      return ProfileStatus.incomplete;
+    }
+  }
+
+  void updateData(Map<String, dynamic> data) {
+    if (data.isEmpty) {
+      return;
+    }
+    areYouAlocalProvider =
+        Validator(data['areYouAlocalProvider'] as String?, null);
+    businessType = Validator(data['businessType'] as String?, null);
+    businessName = Validator(data['businessName'] as String?, null);
+    areYouRegisteredWithCipa =
+        Validator(data['areYouRegisteredWithCipa'] as String?, null);
+    dateOfRegistration = Validator(data['dateOfRegistration'] as String?, null);
+    ownership = Validator(data['ownership'] as String?, null);
+    cipaRegistrationNumber =
+        Validator(data['cipaRegistrationNumber'] as String?, null);
+    paymentType = Validator(data['paymentType'] as String?, null);
     notifyListeners();
   }
 }

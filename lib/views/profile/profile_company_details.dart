@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:pprab/controllers/auth_controller.dart';
+import 'package:pprab/controllers/dashboard_controller.dart';
+import 'package:pprab/models/business_model.dart';
+import 'package:pprab/models/company_details_model.dart';
 import 'package:pprab/util/dimensions.dart';
 import 'package:pprab/views/profile/forms/company_details_form.dart';
 import 'package:pprab/views/profile/widgets/breadcrumbs.dart';
@@ -15,6 +19,8 @@ class ProfileCompanyDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final form = context.watch<CompanyDetailsForm>();
+    final auth = context.watch<Auth>();
+    final dashboardController = context.watch<DashboardController>();
     return Padding(
       padding: const EdgeInsets.all(46),
       child: Wrap(
@@ -23,6 +29,19 @@ class ProfileCompanyDetails extends StatelessWidget {
         children: [
           const ProfileLabel(
               title: 'Company Details', icon: FontAwesomeIcons.store),
+          Div(
+            divison: const Division(
+              colL: 12,
+              colM: 12,
+              colS: 12,
+            ),
+            child: CustomRadio(
+              options: const ['Express', 'Normal'],
+              label: 'Type of Payment',
+              onChanged: form.validatePaymentType,
+              value: form.paymentType.value,
+            ),
+          ),
           Div(
             divison: const Division(
               colL: 5,
@@ -62,6 +81,19 @@ class ProfileCompanyDetails extends StatelessWidget {
               value: form.areYouRegisteredWithCipa.value,
             ),
           ),
+          Div(
+            divison: const Division(
+              colL: 5,
+              colM: 12,
+              colS: 12,
+            ),
+            child: TextInput(
+              label: 'Name of Business/Company',
+              onChanged: form.validateBusinessName,
+              value: form.businessName.value,
+              errorText: form.businessName.error,
+            ),
+          ),
           if (form.areYouRegisteredWithCipa.value == 'Yes')
             Div(
               divison: const Division(
@@ -69,7 +101,7 @@ class ProfileCompanyDetails extends StatelessWidget {
                 colM: 12,
                 colS: 12,
               ),
-              child: TextInput(
+              child: CIPAInput(
                 label: 'CIPA Registration Number',
                 onChanged: form.validateCipaRegistrationNumber,
                 value: form.cipaRegistrationNumber.value,
@@ -113,7 +145,46 @@ class ProfileCompanyDetails extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 FillButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    if (form.isValid) {
+                      final companies = auth.currentContractor?.companies ?? [];
+                      final data = form.data;
+
+                      final companyDetailsModel =
+                          CompanyDetailsModel.fromMap(data);
+                      // remove if exists
+                      companies
+                        ..removeWhere((element) =>
+                            element.companyDetailsModel?.businessName ==
+                            companyDetailsModel.businessName)
+
+                        // add new
+                        ..add(
+                          BusinessModel(
+                            companyDetailsModel: companyDetailsModel,
+                          ),
+                        );
+
+                      final contractor = auth.currentContractor?.copyWith(
+                        companies: companies,
+                      );
+
+                      auth.updateContractor(contractor);
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          backgroundColor: Colors.green,
+                          content: Text('Company details updated'),
+                        ),
+                      );
+                      dashboardController.setSelectedBreadcrumbIndex(2);
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('Please fill in all fields'),
+                        ),
+                      );
+                    }
+                  },
                   text: 'Done',
                 )
               ],
