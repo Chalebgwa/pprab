@@ -9,7 +9,7 @@ environment:
 dependencies:
   flutter_native_splash: ^2.3.2
   carousel_slider: ^4.2.1
-  cloud_firestore: ^4.9.0
+  cloud_firestore: ^4.9.3
   faker: ^2.1.0
   file_picker: ^5.5.0
   firebase_analytics: ^10.4.5
